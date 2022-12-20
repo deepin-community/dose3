@@ -1,0 +1,15 @@
+Package: xxx
+Architecture: toaster
+Version: 17.1
+Build-Depends: bbb
+
+Package: yyy
+Architecture: toaster
+Version: 18.2
+Build-Depends: ccc
+
+Package: zzz
+Architecture: toaster
+Version: 19.3
+Build-Depends: ccc
+Build-Conflicts: ddd

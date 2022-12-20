@@ -1,0 +1,10 @@
+Document: apt-extern-solvers-primer
+Title: Using apt-get With External Solvers
+Author: Pietro Abate, Roberto Di Cosmo, Ralf Treinen, Stefano Zacchiroli
+Abstract: This document describes how to connect apt-get with external solvers
+ using apt-cudf.
+Section: System/Package Management
+
+Format: HTML
+Index: /usr/share/doc/dose-doc/apt-external-solvers.html
+Files: /usr/share/doc/dose-doc/apt-external-solvers.html

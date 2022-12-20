@@ -1,0 +1,8 @@
+Tests: dose-debcheck bug811569 bug790422 bug867104
+Depends: dose-distcheck
+
+Tests: dose-builddebcheck bug896084
+Depends: dose-builddebcheck
+
+Tests: dose-outdated
+Depends: dose-extra

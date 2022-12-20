@@ -1,0 +1,21 @@
+Package: aaa
+Architecture: toaster
+Version: 2.1
+Depends: bbb
+Python_Version: 2.7
+
+Package: bbb
+Architecture: toaster
+Version: 3.2
+Depends: ccc
+# Depends: commented line should be ignored
+
+Package: ccc
+Architecture: toaster
+Version: 4.3
+Conflicts: ddd
+
+Package: build-essential
+Architecture: toaster
+Version: 5.5-5
+Depends: ccc

@@ -1,0 +1,15 @@
+#!/bin/sh
+
+# debian bug 896084: versioned provides and versioned build-dependency
+
+set -e
+
+this=dose-debcheck
+indir=debian/tests/repos
+
+packfile=$indir/Packages_896084
+sourcefile=$indir/Sources_896084
+base=$(basename $packfile)
+
+dose-builddebcheck --deb-native-arch=amd64 ${packfile} ${sourcefile} \
+    | grep -q "broken-packages: 1"

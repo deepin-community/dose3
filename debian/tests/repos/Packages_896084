@@ -1,0 +1,8 @@
+Package: build-essential
+Version: 1
+Architecture: amd64
+
+Package: binary-package
+Version: 1
+Architecture: amd64
+Provides: provided (= 2)

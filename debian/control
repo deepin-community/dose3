@@ -1,0 +1,149 @@
+Source: dose3
+Section: ocaml
+Priority: optional
+Maintainer: Debian OCaml Maintainers <debian-ocaml-maint@lists.debian.org>
+Uploaders: Stefano Zacchiroli <zack@debian.org>,
+           Ralf Treinen <treinen@debian.org>,
+           Johannes 'josch' Schauer <josch@debian.org>
+Build-Depends: debhelper-compat (= 13),
+               dh-ocaml (>= 0.9~),
+               libbase64-ocaml-dev (>= 3.1.0),
+               libbz2-ocaml-dev (>= 0.6.0-10~),
+               libcudf-ocaml-dev (>= 0.7),
+               libextlib-ocaml-dev (>= 1.7.7),
+               libocamlgraph-ocaml-dev (>= 1.8.6),
+               libre-ocaml-dev (>= 1.7.2~),
+               libzip-ocaml-dev (>= 1.08),
+               ocaml-dune (>= 2.7.1),
+               ocaml-nox (>= 4.03),
+               pandoc
+Build-Depends-Arch: grep-dctrl <!nocheck>,
+                    libounit-ocaml-dev <!nocheck>,
+                    libparmap-ocaml-dev,
+                    perl,
+                    python3-yaml <!nocheck>,
+                    xz-utils <!nocheck>
+Build-Depends-Indep: graphviz <!nodoc>,
+                     hevea <!nodoc>,
+                     lmodern <!nodoc>,
+                     ocaml-odoc <!nodoc>,
+                     texlive-latex-base <!nodoc>,
+                     texlive-latex-extra <!nodoc>
+Standards-Version: 4.5.1
+Homepage: http://www.mancoosi.org/software/
+Vcs-Browser: https://salsa.debian.org/ocaml-team/dose3
+Vcs-Git: https://salsa.debian.org/ocaml-team/dose3.git
+Rules-Requires-Root: no
+
+Package: libdose3-ocaml-dev
+Architecture: any
+Depends: ${misc:Depends}, ${ocaml:Depends}, ${shlibs:Depends}
+Recommends: ocaml-findlib
+Provides: ${ocaml:Provides}
+Description: OCaml libraries for package dependencies (development files)
+ Dose3 is a framework consisting of several OCaml libraries for analysing
+ the metadata of software packages (like Packages files of Debian suites).
+ .
+ Though not tied to any particular distribution, Dose3 constitutes a
+ pool of libraries which enable analyzing packages coming from various
+ distributions.
+ .
+ Besides basic functionalities for querying and setting package
+ properties, dose3 also implements algorithms for solving more complex
+ problems (monitoring package evolutions, correct and complete
+ dependency resolution, repository-wide uninstallability checks).
+ .
+ This package contains the development stuff you need to use dose3 for
+ the development of programs.
+
+Package: dose-distcheck
+Section: devel
+Architecture: any
+Depends: xz-utils, ${misc:Depends}, ${ocaml:Depends}, ${shlibs:Depends}
+Breaks: dose3-distcheck (<< 2.9.13)
+Replaces: dose3-distcheck (<< 2.9.13)
+Description: Checks whether dependencies of packages can be satisfied
+ This software checks for every package of a distribution whether it
+ is possible to satisfy its dependencies and conflicts within this
+ distribution. It comes in several versions:
+  - dose-debcheck for Debian packages
+  - dose-rpmcheck for rpm packages
+  - dose-eclipsecheck for OSGi plugins
+
+Package: dose-builddebcheck
+Section: devel
+Architecture: any
+Depends: xz-utils, ${misc:Depends}, ${ocaml:Depends}, ${shlibs:Depends}
+Breaks: dose3-builddebcheck (<< 2.9.13)
+Replaces: dose3-builddebcheck (<< 2.9.13)
+Description: Checks whether build-dependencies can be satisfied
+ This software checks, given a collection of source package stanzas
+ and a collection of binary package stanzas of Debian packages, whether
+ the build-dependencies of each source package can be satisfied by the
+ binary packages.
+
+Package: dose-extra
+Section: devel
+Architecture: any
+Provides: ceve
+Breaks: ceve (<< 2.9.10)
+Replaces: ceve (<< 2.9.10)
+Depends: xz-utils, ${misc:Depends}, ${ocaml:Depends}, ${shlibs:Depends}
+Description: Extra QA tools from the Dose3-library
+ This package contains extra tools for analyzing meta-data of software
+ packages:
+  - ceve, a general metadata parser supporting different input formats
+    (Debian, rpm, and others) and different output formats.
+  - dose-outdated, a Debian-specific tool for finding packages that are not
+    installable with respect to a package repository, and that can only be
+    made installable again by fixing the package itself.
+  - dose-challenged, a Debian-specific tool for checking which packages
+    will certainly become uninstallable when some existing package is upgraded
+    to a newer version.
+  - dose-deb-coinstall, a Debian-specific tool for checking whether a set of
+    packages can be installed all together.
+ The tools dose-distcheck and dose-builddebcheck are packaged in their
+ own respective packages.
+
+Package: apt-cudf
+Section: admin
+Architecture: any
+Depends: aspcud | cudf-solver,
+         ${misc:Depends},
+         ${ocaml:Depends},
+         ${perl:Depends},
+         ${shlibs:Depends}
+Description: CUDF solver integration for APT
+ apt-cudf provides integration among the APT package manager and CUDF solvers,
+ allowing APT to rely on external (CUDF-based) dependency solvers to plan
+ package installation, upgrade, and removal.
+ .
+ CUDF is a distribution-independent, standard format to describe dependency
+ solving scenarios, as faced by package managers in popular package-based
+ GNU/Linux distributions. APT is a well-known package manager for Debian-based
+ distributions, which is able to delegate dependency solving to external
+ solvers, by the means of the External Dependency Solving Protocol (EDSP).
+ .
+ apt-cudf provides the glue between the EDSP protocol and CUDF solvers,
+ enabling any installed CUDF solver to be used as an external solver for APT.
+ .
+ Several CUDF solvers are available in Debian. They all provide the cudf-solver
+ virtual package.
+
+Package: dose-doc
+Section: doc
+Architecture: all
+Depends: ${misc:Depends}
+Replaces: apt-cudf (<< 4.3-2),
+          dose-distcheck (<< 4.3-2),
+          libdose3-ocaml-dev (<< 4.3-2)
+Breaks: apt-cudf (<< 4.3-2),
+        dose-distcheck (<< 4.3-2),
+        libdose3-ocaml-dev (<< 4.3-2)
+Multi-Arch: foreign
+Build-Profiles: <!nodoc>
+Description: Documentation for dose tools and libraries.
+ The dose suite provides libraries for handling package meta-data, and various
+ tools for analyzing package relationships in a large package repository.
+ This package contains the documentation of the dose API, and tutorials of
+ various dose tools.

@@ -1,0 +1,872 @@
+dose3 (6.0.1-deepin1) unstable; urgency=medium
+
+  * Rebuild
+
+ -- Deepin Packages Builder <packages@deepin.org>  Fri, 11 Nov 2022 17:56:35 +0800
+
+dose3 (6.0.1-2) unstable; urgency=medium
+
+  * d/rules, d/control: split into arch/indep
+  * debian/control: annotate with nodoc and nocheck
+  * debian/control: fix version constraints
+
+ -- Johannes 'josch' Schauer <josch@debian.org>  Tue, 02 Feb 2021 11:58:25 +0100
+
+dose3 (6.0.1-1) unstable; urgency=medium
+
+  * New upstream version
+  * debian/watch: upstream moved to gitlab.com/irill/dose3
+  * debian/rules:
+     - buildsystem switched to dune
+     - call dune build -p dose3 to avoid 'Error: Too many opam files
+       for package'
+     - add DEB_BUILD_MAINT_OPTIONS = hardening=+all
+     - check DEB_BUILD_OPTIONS for nocheck before running tests
+     - do not override_dh_dwz anymore
+  * debian/control:
+     - adjust build dependencies
+     - add Rules-Requires-Root: no
+     - bump Standards-Version to 4.5.1
+     - bump dh compat to 13 and use debhelper-compat as B-D
+     - drop libdose3-ocaml package as there are no shared runtime stubs anymore
+  * debian/patches:
+     - drop patches: everything is now upstream
+     - add patch for ocamlgraph 1.8.6
+     - pick two patches from upstream to fix FTBFS
+     - add patch making dose3 tests succeed on 32 bit arches
+  * fix paths in *.install and *.manpages and *.docs
+  * debian/copyright: fix paths that were moved into src
+  * debian/update-cudf-solvers: fix typo opearte -> operate
+  * run wrap-and-sort
+
+ -- Johannes 'josch' Schauer <josch@debian.org>  Mon, 01 Feb 2021 23:08:16 +0100
+
+dose3 (5.0.1-16) unstable; urgency=medium
+
+  * Team upload
+  * Do not use -custom (Closes: #978024)
+
+ -- Stéphane Glondu <glondu@debian.org>  Wed, 06 Jan 2021 16:21:12 +0100
+
+dose3 (5.0.1-15) unstable; urgency=medium
+
+  * add debian/salsa-ci.yml
+  * debian/control: fix my name
+  * add patch to handle m-a:same conflicts with virtual packages (closes: #964026)
+
+ -- Johannes 'josch' Schauer <josch@debian.org>  Sun, 12 Jul 2020 11:02:29 +0200
+
+dose3 (5.0.1-14) unstable; urgency=medium
+
+  [ Stéphane Glondu ]
+  * Team upload
+  * Compile with -safe-string (Closes: #934347)
+
+  [ Ralf Treinen ]
+  * fix spelling error in the long description of dose-extra
+
+ -- Stéphane Glondu <glondu@debian.org>  Sun, 11 Aug 2019 17:07:27 +0200
+
+dose3 (5.0.1-12) unstable; urgency=medium
+
+  * Standards-Version 4.3.0 (no change)
+  * Fix whitespace in debian/{changelog,control}
+  * libdose3-ocaml-dev: Recommends ocaml-findlib
+
+ -- Ralf Treinen <treinen@debian.org>  Fri, 26 Jul 2019 16:07:51 -0300
+
+dose3 (5.0.1-11) unstable; urgency=medium
+
+  * Team upload
+  * Add a patch to build with ocaml-re 1.7.3 and constraint minimal
+    required version for ocaml-re in d/control accordingly.
+  * Update Vcs-* fields
+  * Refresh patches
+
+ -- Mehdi Dogguy <mehdi@debian.org>  Sun, 03 Jun 2018 11:14:38 +0200
+
+dose3 (5.0.1-10) unstable; urgency=medium
+
+  * Added a test case for dose-builddebcheck with versioned provides and
+    a versioned build-dependency, taken from James Clarkes bug report
+    #896084.
+  * Patch 0009-Fix-and-constraints-against-virtual-packages.patch: fix
+    cudf encoding of versioned and unversioned virtual packages. Thanks a
+    lot to James Clarke for the patch! (closes: #896084)
+  * Patch typo-plural: fix some occurrences of "does not exists"
+    (closes:  #869846).
+  * Refreshed patch deb-drop-b-d-arch
+  * Standards-Version 4.1.4:
+    - Changed Priority from extra to optional
+    - d/copyright: https in format url
+
+ -- Ralf Treinen <treinen@debian.org>  Sat, 21 Apr 2018 17:05:24 +0200
+
+dose3 (5.0.1-9) unstable; urgency=medium
+
+  * patch virtual_provides: packages that provide the same virtual package
+    in different versions, or that provide the same versioned virtual package
+    as a real package, are co-installable (closes: #867104, #864906).
+  * add a test-case for bug  #867104
+  * dose-doc: set Multi-Arch=foreign
+  * add build-dependency on ocamlbuild
+  * standards-version 4.0.0 (no change)
+
+ -- Ralf Treinen <treinen@debian.org>  Wed, 19 Jul 2017 10:19:10 +0200
+
+dose3 (5.0.1-8) unstable; urgency=medium
+
+  * Patches taken from upstream (thanks, Josch!)
+    - architecture-tuples: replace architecture triples by tuples.
+      (closes: #843409)
+    - architectures-dpkg-1.18.15: Update embedded cputable and tupletable
+      to dpkg 1.18.15
+    - deb-drop-d-b-arch: add support for --deb-drop-b-d-arch (closes: #850943)
+
+ -- Ralf Treinen <treinen@debian.org>  Tue, 17 Jan 2017 22:14:21 +0100
+
+dose3 (5.0.1-7) unstable; urgency=medium
+
+  * use pic options only on native architectures.
+
+ -- Ralf Treinen <treinen@debian.org>  Thu, 03 Nov 2016 13:23:49 +0100
+
+dose3 (5.0.1-6) unstable; urgency=medium
+
+  * New patch ocaml-4.02.3+gcc-6.2.0 as provided by Josch: fix FTBFS. This
+    patch should probably be removed when we transition to ocaml 4.03.
+
+ -- Ralf Treinen <treinen@debian.org>  Thu, 27 Oct 2016 08:55:57 +0200
+
+dose3 (5.0.1-4) unstable; urgency=medium
+
+  * Revert the change introduced by 5.0.1-3, since it makes the
+    autobuilders fail.
+
+ -- Ralf Treinen <treinen@debian.org>  Wed, 26 Oct 2016 08:18:30 +0200
+
+dose3 (5.0.1-3) unstable; urgency=medium
+
+  * Added build-dependency "ocamlbuild|ocaml-nox(<<4.03)", in view of the
+    transition to ocaml 4.03 which does no longer include ocamlbuild.
+
+ -- Ralf Treinen <treinen@debian.org>  Tue, 25 Oct 2016 22:03:12 +0200
+
+dose3 (5.0.1-2) unstable; urgency=medium
+
+  [ Johannes Schauer ]
+  * Backport more commits from upstream to fix remaining bugs considering
+    - the handling of Essential:yes packages:
+        0003-applications-distcheck.ml-Consider-essential-package.patch
+        0007-applications-deb-buildcheck.ml-fix-regression-that-l.patch
+        0008-Catch-expection-in-diagnostic.ml.patch
+    - library bugs that affect packages using libdose3-dev:
+        0004-doseparse-stdUtils.ml-It-s-d.byte-and-not-p.byte-for.patch
+        0005-algo-depsolver.ml-reset-progress-bar-after-univcheck.patch
+        0006-algo-depsolver.ml-set-correct-value-for-Util.Progres.patch
+
+  [ Ralf Treinen ]
+  * Patch input-xz-files: accept input from xz-compressed files.
+    Add dependency on xz-utils.
+
+ -- Ralf Treinen <treinen@debian.org>  Sun, 16 Oct 2016 19:36:29 +0200
+
+dose3 (5.0.1-1) unstable; urgency=medium
+
+  * new upstream release
+  * remove patches distcheck-fg-bg and getrealname as they have been
+    incorporated upstream
+  * backport patches
+    0001-check_request_using-can-return-discording-result-bet.patch and
+    0002-tentative-fix-for-missing-essential-problem-apt-cudf.patch from
+    upstream git to fix missing Essential:yes packages when invoking external
+    solvers
+
+ -- Johannes Schauer <josch@debian.org>  Thu, 08 Sep 2016 23:05:40 +0200
+
+dose3 (5.0-3) unstable; urgency=medium
+
+  * d/rules: make build-indep depend on configure-stamp
+
+ -- Ralf Treinen <treinen@debian.org>  Fri, 15 Jul 2016 22:55:36 +0200
+
+dose3 (5.0-2) unstable; urgency=medium
+
+  * patch distcheck-fg-bg: fix calculation of the list of packages to check
+    by distcheck in case of both --bg and --fg arguments (closes: #830957).
+  * patch getrealname: fix the function get_real_name to remove both a
+    --virtual prefix and an :architecture suffix in case both are present.
+    This fixes a crash during the generation of explanations observed by
+    wanna-build.
+  * added NEWS item for dose-distcheck and dose-builddebcheck
+    about --latest now taking an integer argument.
+
+ -- Ralf Treinen <treinen@debian.org>  Fri, 15 Jul 2016 19:08:14 +0200
+
+dose3 (5.0-1) unstable; urgency=medium
+
+  * new upstream release
+
+ -- Ralf Treinen <treinen@debian.org>  Wed, 22 Jun 2016 20:07:10 +0200
+
+dose3 (5.0~rc2-1) experimental; urgency=medium
+
+  * new upstream release:
+    - refreshed patch binaries-prefix-edos
+    - dropped patches integrated by upstream:
+      0001-applications-apt-cudf.ml-Do-not-generate-removal-req.patch
+      0001-fix-licence-header.patch
+  * specify minimum version 1.1.2 for build-dependency "cppo", following
+    upstream instructions.
+
+ -- Ralf Treinen <treinen@debian.org>  Sun, 19 Jun 2016 20:50:45 +0200
+
+dose3 (4.3-3) experimental; urgency=medium
+
+  * dose-doc: breaks older versions of apt-cudf, libdose3-ocaml-dev,
+    dose-distcheck (closes: #826690).
+
+ -- Ralf Treinen <treinen@debian.org>  Wed, 08 Jun 2016 04:49:39 +0200
+
+dose3 (4.3-2) experimental; urgency=medium
+
+  * New binary package dose-doc. Split debian/rules targets into -arch
+    and -indep; split off Build-Depends-Indep from Build-Depends.
+  * change doc-base section of the apt-cudf primer to System/Package Management
+  * d/rules: simplify override for dh_auto_clean, create file debian/clean
+
+ -- Ralf Treinen <treinen@debian.org>  Mon, 06 Jun 2016 19:46:11 +0200
+
+dose3 (4.3-1) experimental; urgency=medium
+
+  [ Ralf Treinen ]
+  * New upstream version.
+  * Drop patch lexing-debian-fields: applied upstream
+  * Standards-Version 3.9.8 (no change)
+
+  [ Johannes Schauer ]
+  * Drop patch disable_dot because #809049 has been fixed. Restore build
+    dependency on graphviz.
+  * Add patch 0001-applications-apt-cudf.ml-Do-not-generate-removal-req from
+    upstream git master to let apt-cudf not create a removal request for
+    upgrades or downgrades but only a single install request. See the patch
+    description as well as the closed bug for details (closes: #823906)
+  * Refreshed patch binaries-prefix-edos
+  * Clarify copyright situation of scripts/pack.ml in debian/copyright and
+    patch the copyright header of scripts/pack.ml accordingly with a new patch
+    called 0001-fix-licence-header.patch
+
+ -- Johannes Schauer <josch@debian.org>  Fri, 13 May 2016 19:08:41 +0200
+
+dose3 (4.2-2) unstable; urgency=medium
+
+  * Dropped the Testsuite field in d/control, as it is no longer needed.
+  * d/copyright:
+    - updated filename versioning/debian.ml
+    - removed duplicate paragraph for debian/update-cudf-solvers
+  * Vcs-git: replaced insecure git: URI by https:
+  * patch disable-dot: add Author and Description
+
+ -- Ralf Treinen <treinen@debian.org>  Sun, 03 Apr 2016 22:04:33 +0200
+
+dose3 (4.2-1) experimental; urgency=medium
+
+  * New upstream version. This version fixes a bug in the manpage of
+    dose-builddebcheck (closes: #811248)
+    - refreshed patches:
+      * binaries-prefix-edos
+      * disable_dot
+    - dropped patches integrated by upstream:
+      * fix_ftbfs_on_bytecode_arch
+      * fix_META
+      * cudf_max_int
+   * fixed patch add-gnuhardened1-linux, thanks to Balint Reczey
+     (closes: #812786, again)
+   * d/rules: upstream has renamed manpage buildcheck into deb-buildcheck
+   * d/*.NEWS: say that format version of yaml output has been bumped
+   * drop build-dependency on graphviz, since generation of dot files is
+     deliberately disabled (by patch disable_dot).
+   * Standards-Version 3.9.7 (no change)
+
+ -- Ralf Treinen <treinen@debian.org>  Wed, 10 Feb 2016 08:50:18 +0100
+
+dose3 (4.1-4) unstable; urgency=medium
+
+  * patch lexing-debian-fields: syntax of debian fields according to
+    debian policy. Patch taken from upstream. (closes: #811569)
+  * patch add-gnuhardened1-linux: compile on hardenend1-linux-amd64. Thanks
+    to Balint Reczey for the patch! (closes: #812786)
+  * fix name of dose-deb-coinstall in package description of dose-extra
+    (closes: #812203)
+  * dose-{distcheck,builddebcheck}.NEWS: announce changes in printing of
+    package names (closes: #810303)
+  * add test cases for bug#811569 and bug#790422.
+
+ -- Ralf Treinen <treinen@debian.org>  Sun, 07 Feb 2016 18:36:16 +0100
+
+dose3 (4.1-3) unstable; urgency=medium
+
+  * Fix META file: debian.cm{,x}a needs pef.cm{,x}a. The latter must
+    appear first in the META file.
+  * Add patch to correclty compute max_int on 32bits architectures
+    (Closes: #810513). Thanks to Julian Andres Klode for the patch.
+
+ -- Mehdi Dogguy <mehdi@debian.org>  Sat, 09 Jan 2016 20:01:04 +0100
+
+dose3 (4.1-2) unstable; urgency=medium
+
+  * Team upload.
+  * Fix FTBFS on bytecode architectures.
+    - add patch fix_ftbfs_on_bytecode_arch
+
+ -- Mehdi Dogguy <mehdi@debian.org>  Thu, 07 Jan 2016 22:07:30 +0100
+
+dose3 (4.1-1) unstable; urgency=medium
+
+  * new upstream version. This release implements versioned provides
+    (Closes: #786671).
+    - refreshed patch disable-dot.
+  * configure: explicit --bindir and --libdir
+
+ -- Ralf Treinen <treinen@debian.org>  Thu, 07 Jan 2016 18:49:53 +0100
+
+dose3 (4.1~beta1-1) experimental; urgency=medium
+
+  * new upstream version
+    - refreshed patch coinstall-binary-name
+    - dropped patch coinstall-binary-name, fixed upstream
+  * bump version of build-dependency ocamlgraph and ocaml-nox
+
+ -- Ralf Treinen <treinen@debian.org>  Thu, 24 Dec 2015 14:52:09 +0100
+
+dose3 (4.0.2-4) unstable; urgency=medium
+
+  * Team upload.
+  * Disable call to dot during build to avoid FTBFS on some architectures
+    (Closes: #809049).
+
+ -- Mehdi Dogguy <mehdi@debian.org>  Sun, 03 Jan 2016 11:17:07 +0100
+
+dose3 (4.1~beta1-2) experimental; urgency=medium
+
+  * add patch fix-doc-target-without-ocamlopt.patch to make dose3 build on
+    architectures without ocamlopt
+
+ -- Johannes Schauer <josch@debian.org>  Sat, 26 Dec 2015 16:29:13 +0100
+
+dose3 (4.0.2-3) unstable; urgency=medium
+
+  * revert modifications done for 4.0.2-2 and restore generation of ocamldoc
+    documentation since this is fixed now in ocaml.
+
+ -- Ralf Treinen <treinen@debian.org>  Thu, 24 Dec 2015 12:12:42 +0100
+
+dose3 (4.0.2-2) unstable; urgency=medium
+
+  * skip generation of ocamldoc documentation  since it fails with ocaml 4.02
+    (closes: #801773):
+    - patch skip-ocamldoc
+    - debian/libdose3-ocaml-dev.docs
+    - drop debian/libdose3-ocaml-dev.doc-base
+
+ -- Ralf Treinen <treinen@debian.org>  Fri, 16 Oct 2015 19:12:52 +0200
+
+dose3 (4.0.2-1) unstable; urgency=medium
+
+  * New upstream release
+  * remove patch fix_META (was included upstream)
+
+ -- Johannes Schauer <josch@debian.org>  Sun, 27 Sep 2015 11:14:42 +0200
+
+dose3 (4.0.1-2) unstable; urgency=medium
+
+  * add patch fix_META (Closes: #797448)
+
+ -- Johannes Schauer <josch@debian.org>  Mon, 14 Sep 2015 19:18:38 +0200
+
+dose3 (4.0.1-1) unstable; urgency=medium
+
+  [ Johannes Schauer ]
+  * New upstream release (Closes: #797448):
+    - upstream dropped doc/webpages directory so remove debian/missing-sources
+      and the corresponding sections from debian/copyright
+    - remove patch make-doc-target-work as upstream fixed this
+    - bump version requirement for libextlib-ocaml-dev to 1.7.0 because
+      upstream requires implementation for custom exit values if wrong command
+      line options are passed
+
+  [ Ralf Treinen ]
+  * d/dose-distcheck.NEWS: inform about changes in output format and command
+    line options
+
+ -- Johannes Schauer <josch@debian.org>  Tue, 01 Sep 2015 11:02:51 +0200
+
+dose3 (4.0-1) unstable; urgency=medium
+
+  [ Ralf Treinen ]
+  * New upstream release:
+    - refresh patches: binaries-prefix-edos, coinstall-binary-name
+    - deactivate patches: librpm-4.12
+  * drop the edos-distcheck transitional package.
+  * Replaced build-dependency camlp4 by cppo, following upstream
+  * debian/rules: simplify override_dh_auto_build (primers are now built by
+    upstream's make doc)
+
+  [ Johannes Schauer ]
+  * remove patches cudfSolver-fix-leaking-fds and
+    encode-package-name-in-cudf_extras which have been integrated upstream
+  * upstream moved ./deb/format822.ml to ./common. Adjusting d/copyright
+    accordingly
+  * upstream moved ./deb/version.ml to ./versioning/debian_version.ml.
+    Adjusting d/copyright accordingly.
+  * add d/copyright paragraph for common/shell_lexer.mll
+  * add patch make-doc-target-work to make `make doc` work again
+  * bump d/compat to 9. It has been in stable since wheezy and even
+    old-old-stable has debhelper (>= 9) in backports.
+  * simplify override_dh_auto_configure target
+  * run dh-autoreconf to make sure that everything can truly be built from
+    source
+  * add debian/missing-sources for bootstrap.min.js and jquery-2.1.3.min.js
+    and add debian/README.source to explain the situation
+  * add d/copyright paragraphs for bootstrap.min.js, jquery-2.1.3.min.js and
+    their unminified versions in debian/missing-sources
+  * add doc/webpages to Files-Excluded in d/copyright
+
+ -- Johannes Schauer <josch@debian.org>  Thu, 27 Aug 2015 12:00:35 +0200
+
+dose3 (3.3-4) unstable; urgency=low
+
+  * update patch binaries-prefix-edos: fix name of dose-deb-coinstall
+    (closes: #789331).
+  * patch librpm-4.12: Fix FTBFS with librpm-dev 4.12. Patch extracted
+    from upstream git, commit 1d0ed0a. Bump build-dependency on librpm-dev
+    to >= 4.12 (closes: #789354).
+  * d/control: XS-Testsuite => Testsuite
+
+ -- Ralf Treinen <treinen@debian.org>  Tue, 23 Jun 2015 20:48:33 +0200
+
+dose3 (3.3-3) unstable; urgency=medium
+
+  * upload to unstable
+
+ -- Johannes Schauer <josch@debian.org>  Tue, 05 May 2015 21:35:59 +0200
+
+dose3 (3.3-2) experimental; urgency=medium
+
+  * backport patch cudfSolver-fix-leaking-fds to work around libcudf bug
+    https://gforge.inria.fr/tracker/index.php?func=detail&aid=18789&group_id=4385&atid=13811
+  * added myself to the Uploaders field
+  * remove fixDebPrinter and fixMETA from debian/patches as they were
+    unused
+  * backport patch encode-package-name-in-cudf_extras to prepare for switch
+    of cudf encoding of Debian package names in next dose3 release
+  * backport patch remove_src_prefix_from_name
+
+ -- Johannes Schauer <josch@debian.org>  Fri, 27 Mar 2015 08:48:14 +0100
+
+dose3 (3.3-1) experimental; urgency=medium
+
+  [ Johannes Schauer ]
+  * Team upload.
+  * new upstream version
+    - dropped patches that were integrated upstream: build-cmx, doc-target,
+      installcudf-target, manpages-typos, multiarch-accept-value-no
+  * fix debian/watch (add uversionmangle)
+  * reorder d/copyright stanzas so that the d/update-cudf-solvers paragraph
+    gets used
+
+  [ Ralf Treinen ]
+  * install the apt-external-solvers.primer in package apt-cudf:
+    - added debian/apt-cudf.docs
+    - added debian/apt-cudf.doc-base
+
+ -- Ralf Treinen <treinen@debian.org>  Sat, 22 Nov 2014 14:36:15 +0100
+
+dose3 (3.3~beta1-3) unstable; urgency=medium
+
+  [ Stefano Zacchiroli ]
+  * demote trigger on /usr/share/cudf/solvers from "interest" to
+    "interest-noawait": there is no real need to block, and doing so avoid
+    trigger cycles. Thanks Guillem Jover for the heads-up.
+    (Closes: #772875)
+
+  [ Johannes Schauer ]
+  * fix debian/watch (add uversionmangle)
+
+ -- Stefano Zacchiroli <zack@debian.org>  Fri, 12 Dec 2014 16:39:24 +0100
+
+dose3 (3.3~beta1-2) experimental; urgency=low
+
+  * [ Johannes Schauer ]
+  * add two patches from upstream to fix botch FTBFS
+     - fixMETA fixes the installed META file (closes: #766745)
+     - fixDebPrinter restores original printing of Debian packages
+
+ -- Ralf Treinen <treinen@debian.org>  Tue, 11 Nov 2014 17:35:43 +0100
+
+dose3 (3.3~beta1-1) unstable; urgency=low
+
+  [ Ralf Treinen ]
+  * new upstream version:
+    - refreshed patches: binaries-prefix-edos, coinstall-binary-name
+    - dropped patches that were integrated upstream: buildcheck-manpage,
+      buildcheck-manpage-native-arch, multiarch-accept-value-no
+  * new patches, cherry-picked from upstream git:
+    - doc-target (fix doc target of Makefile)
+    - installcudf-target (restore that target which was accidentially dropped)
+    - build-cmx (really build cmx)
+    - manpages-typos
+  * add rudimentary as-installed package tests for dose-debcheck,
+    dose-builddebcheck, dose-outdated
+  * debian/control: replace Conflicts: by Breaks:
+  * debian/copyright: fixed spelling of Alain Frisch
+  * debian/copyright: dropped connection-licence which is no longer referred to
+
+  [ Johannes Schauer ]
+  * avoid lintian warning binary-control-field-duplicates-source field
+    "priority" by removing the Priority field from edos-distcheck in d/control
+  * avoid lintian warning vcs-field-not-canonical by modifying the Vcs-Git and
+    Vcs-Browser values accordingly
+  * the db subdirectory was removed from the upstream source so remove stanza
+    from d/copyright
+  * bump standards version to 3.9.6
+  * avoid lintian warning copyright-refers-to-symlink-license by pointing to
+    LGPL-3 license file instead of LGPL
+  * d/control: s/debian/Debian/ to avoid capitalization-error-in-description
+  * dropped buildcheck-redirect-output because it was integrated upstream
+
+ -- Ralf Treinen <treinen@debian.org>  Tue, 21 Oct 2014 20:28:45 +0200
+
+dose3 (3.2.2-3) unstable; urgency=medium
+
+  * debian/changelog: fix my email address in previous changelog entry.
+  * add patch buildcheck-manpage-native-arch: specify in the manpage that
+    the --deb-native-arch argument is mandatory to debbuildcheck
+    (closes: #757641).
+  * add patch multiarch-accept-value-no: when parsing debian metadata,
+    accept "no" as alias for "none" as value of Multiarch. Thanks to
+    Pietro Abate for the patch (closes: #759372).
+  * add patch buildcheck-redirect-output: add option -o to builddebcheck
+    which redirects output to a file (closes: #757643).
+
+ -- Ralf Treinen <treinen@debian.org>  Sun, 14 Sep 2014 20:36:02 +0200
+
+dose3 (3.2.2-2) unstable; urgency=medium
+
+  * patch buildcheck-manpage: extend explanation of the -e option of
+    dose-builddebcheck (closes: #750078)
+  * Add a transitional package for edos-distcheck. This makes the
+    following source packages obsolete: pkglab, dose2.
+
+ -- Ralf Treinen <treinen@debian.org>  Sun, 27 Jul 2014 20:48:31 +0200
+
+dose3 (3.2.2-1) unstable; urgency=low
+
+  * New upstream release.
+  * Adapt patch binaries-prefix-edos, the target override_dh_installman
+    in debian/rules, and debian/dose-extra.manpages to the new name of
+    the debcoinstall manpage.
+
+ -- Ralf Treinen <treinen@debian.org>  Tue, 27 May 2014 21:17:32 +0200
+
+dose3 (3.2~rc3-1) experimental; urgency=low
+
+  * New upstream release candidate
+  * Install dose-deb-coinstall manpage
+  * patch coinstall-binary-name: accept "dose-deb-coinstall" as alternative
+    name of the coinstall binary.
+
+ -- Ralf Treinen <treinen@debian.org>  Tue, 06 May 2014 20:00:50 +0200
+
+dose3 (3.2~rc2-1) experimental; urgency=medium
+
+  * New upstream release candidate.
+  * Install deb-coinstall in the dose-extra package.
+
+ -- Ralf Treinen <treinen@debian.org>  Sun, 04 May 2014 22:42:34 +0200
+
+dose3 (3.2~rc1-1) experimental; urgency=low
+
+  * New upstream release candidate. This release fixes a bug related to
+    multiarch (closes: #727642)
+  * Update build-dependency according to upstream's INSTALL instructions:
+    - libocamlgraph-ocaml-dev: >= 1.8.5 (closes: #745307)
+    - replace libpcre-ocaml-dev by libre-ocaml-dev
+    - bump libcudf to >= 0.7
+    - drop automake, autoconf
+  * debian/rules: don't run aclocal & autoconf
+  * Drop debian patches that have become obsolete:
+    - pod2man-5.18
+    - configure-dynlink
+    - ocaml-4.1
+    - ocaml-4.1-zip
+    - doc-makefile-html
+  * Refreshed patches:
+    - binaries-prefix-edos
+
+ -- Ralf Treinen <treinen@debian.org>  Wed, 30 Apr 2014 20:02:59 +0200
+
+dose3 (3.1.3-7) unstable; urgency=low
+
+  * patch ocaml-4.1-zip: fix _tags.in to avoid multiple pp options
+    (closes: #731701).
+
+ -- Ralf Treinen <treinen@debian.org>  Mon, 09 Dec 2013 21:32:31 +0100
+
+dose3 (3.1.3-6) unstable; urgency=low
+
+  * patch ocaml-4.1: fix FTBFS with ocaml 4.01. Thanks a lot to Pietro
+    Abate for his help (closes: #731277)
+  * Standards-version 3.9.5 (no change)
+
+ -- Ralf Treinen <treinen@debian.org>  Fri, 06 Dec 2013 20:23:42 +0100
+
+dose3 (3.1.3-5) unstable; urgency=low
+
+  * debian/rules: "make clean" only when Makefile.config exists
+    (closes: #723864)
+
+ -- Ralf Treinen <treinen@debian.org>  Fri, 20 Sep 2013 21:19:25 +0200
+
+dose3 (3.1.3-4) unstable; urgency=low
+
+  * migrate doc/manpages/ceve.pod to the stricter format of pod2man from
+    perl 5.18.1 (closes: #719866).
+
+ -- Ralf Treinen <treinen@debian.org>  Fri, 16 Aug 2013 18:52:15 +0200
+
+dose3 (3.1.3-3) unstable; urgency=low
+
+  * upload to unstable
+
+ -- Ralf Treinen <treinen@debian.org>  Tue, 07 May 2013 20:41:52 +0200
+
+dose3 (3.1.3-2) experimental; urgency=low
+
+  * Fix FTBFS on architectures not supporting dynamic loading:
+    - new patch configure-dynlink, provided by Mehdi Dogguy
+    - debian/control: add build-dependency on automake, autoconf
+    - debian/rules: dh_auto_configure calls aclocal and autoconf
+
+ -- Ralf Treinen <treinen@debian.org>  Sun, 20 Jan 2013 17:34:42 +0100
+
+dose3 (3.1.3-1) experimental; urgency=low
+
+  * New upstream version. This version fixes the invocation of the clean
+    target in doc/ makefiles (closes: #687651).
+  * debian/{watch.copyright}: new location of upstream on gforge.inria.fr
+  * dropped patches:
+    - version-3.0.2 since upstream got the version right.
+    - multiarch-conflicts (fixed by upstream)
+    - apt-cudf-pinning (fixed by upstream)
+    - builddebcheck-manpage (fixed by upstream)
+  * we dont't have to call aclocal and autoconf any more (since patch
+    version-3.0.2 has been dropped), drop them from debian/rules and from
+    the build-dependencies.
+  * refreshed patch binaries-prefix-edos for the new upstream version
+    (closes: #687576).
+  * debian/rules, debian/dose-distcheck.{docs,doc-base}: the directory
+    doc/debcheck-primer has been renamed to doc/debcheck.primer
+  * patch doc-makefile-html: do not generate html version of man pages
+  * Standards-Version 3.9.4 (no change).
+
+ -- Ralf Treinen <treinen@debian.org>  Sun, 13 Jan 2013 21:57:55 +0100
+
+dose3 (3.0.2-3) unstable; urgency=low
+
+  * Upload to unstable.
+
+ -- Ralf Treinen <treinen@debian.org>  Wed, 03 Oct 2012 19:25:40 +0200
+
+dose3 (3.0.2-2) experimental; urgency=low
+
+  * Patch multiarch-conflicts: fix the translation of conflicts in case of
+    multiarchs, a conflict on package p has to apply to p of all possible
+    architectures. (closes: #685171). Patch extracted from the
+    3.0.2-hotfix branch of the upstream git repository (commit
+    a2f69265323d8cead088eeee2a731db582d3cc81). Thanks to Pietro Abate for
+    having fixed this.
+  * Patch apt-cudf-pinning: Fix version numbers in the package installation
+    requests in the translation process from EDSP to CUDF (closes: #687643).
+    Thanks to Pietro Abate for the patch!
+  * Patch builddebcheck-manpage: Fix architecture options in the
+    dose-builddebcheck manpage (closes: #680271).
+
+ -- Ralf Treinen <treinen@debian.org>  Wed, 26 Sep 2012 17:21:15 +0200
+
+dose3 (3.0.2-1) unstable; urgency=low
+
+  * New upstream version:
+    - Remove patch manpage-distcheck which has been applied upstream
+  * debian/copyright:
+    - fix continuation lines in the paragraph for connection-licence.
+    - fix typo Licence -> License
+  * debian/rules: in clean target, remove doc/debcheck-primer/version.tex
+    since it should be generated.
+  * fix the version number that upstream forgot to bump:
+    - add patch version-3.0.2
+    - add automake and autoconf to build-dependencies
+    - call aclocal and autconf in the configure target of debian/rules
+
+ -- Ralf Treinen <treinen@debian.org>  Wed, 27 Jun 2012 11:24:15 +0200
+
+dose3 (3.0.1-1) unstable; urgency=low
+
+  * New upstream version
+  * Remove patch manpages-section5 which has been applied by upstream
+  * Install upstream's version of apt-cudf-get script and manpage, drop our
+    version in debian/
+  * Patch manpage-distcheck: some improvements to distcheck manpage.
+  * debian/copyright:
+    - put files paragraph with more general file pattern first
+    - add BSD-ish license for db/sqlite/sqlitext/connection.h
+      (thanks to Ansgar Burchardt for the remark).
+
+ -- Ralf Treinen <treinen@debian.org>  Sun, 17 Jun 2012 19:58:39 +0200
+
+dose3 (2.9.17-1) unstable; urgency=low
+
+  * New upstream version.
+    - refreshed patch binaries-prefix-edos
+  * New file debian/apt-cudf.conf, install into /etc
+  * debian/apt-cudf.manpages: install apt-cudf.conf
+  * patch manpages-section5: apt-cudf.conf manpage is section 5 not 1
+  * debian/rules: deactivate dh_auto_test for now as the upstream tarball
+    does not contain the necessary data for the tests.
+  * New file debian/apt-cudf-get, install into /usr/bin
+  * Write a manpage for apt-cudf-get, install in the apt-cudf package.
+
+ -- Ralf Treinen <treinen@debian.org>  Thu, 31 May 2012 22:35:14 +0200
+
+dose3 (2.9.15-1) unstable; urgency=low
+
+  * New upstream version. This version fixes a bug in the printing of
+    debian package versions (closes: #665378)
+  * Remove patch dont-strip-bytecode, now integrated by upstream.
+
+ -- Ralf Treinen <treinen@debian.org>  Fri, 30 Mar 2012 15:29:07 +0200
+
+dose3 (2.9.14-3) unstable; urgency=low
+
+  * fix a typo in long description of dose-extra
+  * put an empty directory /usr/lib/apt/solvers into the apt-cudf package
+    so that dpkg knows it has to remove it on package removal.
+    (closes: #664860)
+
+ -- Ralf Treinen <treinen@debian.org>  Wed, 21 Mar 2012 21:00:31 +0100
+
+dose3 (2.9.14-2) unstable; urgency=low
+
+  * patch dont-strip-bytecode: install must not try to strip executables
+    when compilation to bytecode. Fixes an FTBFS on architectures with
+    compilation to bytecode.
+
+ -- Ralf Treinen <treinen@debian.org>  Sat, 17 Mar 2012 19:24:48 +0100
+
+dose3 (2.9.14-1) unstable; urgency=low
+
+  * New upstream version
+    - ported patch binaries-prefix-edos to the new upstream version
+  * debian/control: add {$perl:Depends} to dependencies of apt-cudf
+    (closes: Bug#659834)
+  * debian/control: use Conflicts and Removes to remove old versions of
+    binary packages from before the renaming:
+    - dose-distcheck conflicts with dose3-distcheck
+    - dose-builddebcheck conflicts with dose3-builddebcheck
+  * Rename ceve to dose-ceve (binary and manpage)
+  * Standards-Version 3.9.3
+    - debian/copyright: machine readable format 1.0
+  * package libdose3-ocaml: only install files dll*stubs.so
+  * build and install the debcheck primer:
+    - debian/control: add build-dependency on hevea, texlive-latex-base,
+      texlive-latex-extra
+    - debian/rules: compile the primer
+    - add debian/dose-distchecks.{docs, doc-base}
+
+ -- Ralf Treinen <treinen@debian.org>  Fri, 16 Mar 2012 19:31:34 +0100
+
+dose3 (2.9.13-1) experimental; urgency=low
+
+  * New upstream release - now almost ready for sid!
+  * The ceve package has disappeared, we have instead now a new package
+    dose-extra that contains all tools that do not deserve their own
+    package (for the moment: ceve, outdated, challenged).
+  * Packages for distcheck and builddebcheck have prefix dose- now.
+    Binaries (except ceve and apt-cudf) also have prefix dose.
+  * debian/rules:
+    - configuration option --with-rpm has become --with-rpm4
+    - upstream has fixed installation of algo.a, we can now remove our own
+      hack in override_auto_install.
+  * debian/control:
+    - The apt-cudf package now depends first on aspcud before the virtual
+      package cudf-solver
+    - add ${shlibs:Depends} to dependencies of libdose3-ocaml-dev
+    - Bump build-dependency on cudf to 0.6.2
+    - Added build-dependency on perl needed for building the manpages
+      using pod2man, and on graphviz which is needed to build the
+      dependency graph of modules in the documentation.
+  * generate documentation with ocamldoc (make doc) and install it in the
+    libdose3-ocaml-dev package. Add an doc-base entry for the documentation.
+  * debian/copyright: update (files common/url.ml, deb/version.ml)
+
+ -- Ralf Treinen <treinen@debian.org>  Tue, 07 Feb 2012 21:41:12 +0100
+
+dose3 (2.9.8-1) experimental; urgency=low
+
+  [ Stefano Zacchiroli ]
+  * New upstream release
+    - first release shipping apt-cudf
+  * new binary package: apt-cudf
+    - provides glue among CUDF solvers and EDSP (i.e. APT's native)
+      external solvers
+    - new helper update-cudf-solvers, to be invoked at each new
+      installation of CUDF solvers, to bind them to APT
+    - set up trigger monitoring /usr/share/cudf/solvers/; it will invoke
+      update-cudf-solvers at each change
+  * debian/copyright: add coverage of packaging work, singling out
+    update-cudf-solvers
+
+ -- Stefano Zacchiroli <zack@debian.org>  Sun, 12 Jun 2011 09:37:58 +0200
+
+dose3 (2.9.4-2) experimental; urgency=low
+
+  * Attempt to install algo.{a,o} only when they exist. This should fix
+    compilation of the package on non-native architectures.
+    (closes: #627283)
+
+ -- Ralf Treinen <treinen@debian.org>  Sat, 04 Jun 2011 10:39:54 +0200
+
+dose3 (2.9.4-1) experimental; urgency=low
+
+  * New upstream release. This release solves an issue with spuriously
+    exported modules that blocked resolution of #627274.
+  * Install all of usr/lib/ocaml/dose3 in the -dev package (closes: #627274)
+  * Remove patch ignore-experimental since this is fixed upstream now.
+  * Bump version on build-dependency libcudf-ocaml-dev.
+  * Add a binary package libdose3-ocaml for the runtime stub libraries.
+  * debian/rules: install _build/algo/algo.{a,o}.
+
+ -- Ralf Treinen <treinen@debian.org>  Thu, 02 Jun 2011 11:25:57 +0200
+
+dose3 (2.9.3-2) experimental; urgency=low
+
+  * use debian/libdose3-ocaml-dev.install (instead of ..install.in)
+  * install in the libdose3-ocaml-dev package more files
+    (*.mli, *.cmi, *.a, *.o) from usr/lib/ocaml/dose3.
+  * Recompile against librpm 4.9.0
+
+ -- Ralf Treinen <treinen@debian.org>  Mon, 23 May 2011 08:07:08 +0200
+
+dose3 (2.9.3-1) experimental; urgency=low
+
+  * Initial upload (closes:  #587521)
+  * New upstream release. This release resolves the problems with the
+    copyright of some of the files. In particular, common/url.ml has
+    been rewritten from scratch.
+  * Standards-Version 3.9.2 (no change)
+  * debian/control: remove redundant Section entry for libdose3-ocaml-dev.
+  * Drop patch manpages since fixed by upstream.
+  * Patch ignore-experimental: remove references to experimental directory
+    which does not exist in the released tarball.
+
+ -- Ralf Treinen <treinen@debian.org>  Sun, 15 May 2011 19:12:44 +0200

@@ -1,0 +1,8 @@
+ceve (2.9.3-1) experimental; urgency=low
+
+    Several of the input and output formats of earlier versions of
+    ceve versions are no longer supported: EGraph, Oz, and tart (which
+    has been replaced by CNF). The new output format DIMACS has been
+    added.
+
+ -- Ralf Treinen <treinen@debian.org>  Fri, 05 Nov 2010 14:56:17 +0100

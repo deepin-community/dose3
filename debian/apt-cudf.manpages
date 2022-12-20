@@ -1,0 +1,4 @@
+debian/update-cudf-solvers.8
+doc/manpages/apt-cudf-get.8
+doc/manpages/apt-cudf.1
+doc/manpages/apt-cudf.conf.5

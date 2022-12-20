@@ -1,0 +1,45 @@
+; needs dune 2.7 because of pipe-outputs which we do not use because of
+; https://github.com/ocaml/dune/issues/4126
+;(rule
+; (target Packages_20201226T144309Z_amd64_noaspell)
+; (deps Packages_20201226T144309Z_amd64.xz)
+; (action (with-outputs-to %{target} (pipe-outputs (run unxz --to-stdout %{deps}) (run grep-dctrl --not --exact -F Package aspell)))))
+; (action (with-outputs-to %{target} ())i)
+;(rule
+; (target Packages_20201226T144309Z_amd64_nogrep)
+; (deps Packages_20201226T144309Z_amd64.xz)
+; (action (with-outputs-to %{target} (pipe-outputs (run unxz --to-stdout %{deps}) (run grep-dctrl --not --exact -F Package grep)))))
+
+(rule
+ (target Packages_20201226T144309Z_amd64)
+ (deps
+  (:p
+   (file Packages_20201226T144309Z_amd64.xz)))
+ (action
+  (with-stdout-to
+   %{target}
+   (run unxz --to-stdout %{p}))))
+
+(rule
+ (target Packages_20201226T144309Z_amd64_noaspell)
+ (deps
+  (:p Packages_20201226T144309Z_amd64))
+ (action
+  (with-stdout-to
+   %{target}
+   (run grep-dctrl --not --exact -F Package aspell %{p}))))
+
+(rule
+ (target Packages_20201226T144309Z_amd64_nogrep)
+ (deps
+  (:p Packages_20201226T144309Z_amd64))
+ (action
+  (with-stdout-to
+   %{target}
+   (run grep-dctrl --not --exact -F Package grep %{p}))))
+
+(rule
+ (target debian_20201226T144309Z.cudf)
+ (deps debian_20201226T144309Z.cudf.xz)
+ (action
+  (run unxz --keep %{deps})))

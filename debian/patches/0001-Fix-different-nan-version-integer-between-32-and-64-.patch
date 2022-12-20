@@ -1,0 +1,161 @@
+From b5ff7739c56d959e830de631464d8e242465bea3 Mon Sep 17 00:00:00 2001
+From: Johannes 'josch' Schauer <josch@mister-muffin.de>
+Date: Fri, 29 Jan 2021 13:48:32 +0100
+Subject: [PATCH] Fix different nan-version integer between 32 and 64 bit
+
+Before, the output of `dose-ceve -T cudf deb://Packages` would produce
+different results on 32 bit and 64 bit architectures because the magic
+integer denoting an impossible constraint was chosen like this:
+
+let max32int = if Int32.to_int Int32.max_int < 0 then max_int else Int32.to_int Int32.max_int
+
+The above yields on 1073741823 on 32 bits and 2147483647 on 64 bits. The
+latter does not fit into an ocaml integer on 32 bit arches, so cudf files
+created on 64 bit architectures cannot be parsed on 32 bit architectures.
+
+The version constant is now 1073741822 (or 2**30-2) everywhere but to also be
+able to read in cudf files that were produced on 64 bit in the past, we also
+interpret 2147483646 as the special version. Since the codebase did not only
+check for max_int-1 (on 32 bit) or Int32.max_int-1 (on 64 bit) but also for
+max_int and Int32.max_int, there are overall four cases:
+
+For 32bit and 64bit arches:
+   - 1073741822 -> 2**30-2 or max_int-1 on 32bit
+   - 1073741823 -> 2**30-1 or max_int on 32bit
+Only for 64bit arches because the integer doesn't fit on 32bit:
+   - 2147483646 -> 2**31-2 or Int32.max_int-1
+   - 2147483647 -> 2**31-1 or Int32.max_int
+---
+ src/common/cudfAdd.ml     | 34 +++++++++++++++++++++++++++++++++-
+ src/common/cudfAdd.mli    |  6 ++++++
+ src/common/util.ml        |  6 ++----
+ src/deb/debcudf.ml        |  7 +++----
+ src/pef/pefcudf.ml        |  3 +--
+ tests/DebianPackages/dune | 13 ++++++++++++-
+ 6 files changed, 57 insertions(+), 12 deletions(-)
+
+--- a/src/common/cudfAdd.ml
++++ b/src/common/cudfAdd.ml
+@@ -47,6 +47,38 @@ end)
+ 
+ let to_set l = List.fold_right Cudf_set.add l Cudf_set.empty
+ 
++(* In the past, the special version denoting an impossible constraint was
++ * different between 32 and 64 bit architectures. The version constant is now
++ * 1073741822 (or 2**30-2) everywhere but to also be able to read in cudf files
++ * that were produced on 64 bit in the past, we also interpret 2147483646 as
++ * the special version. Since the codebase did not only check for max_int-1 (on
++ * 32 bit) or Int32.max_int-1 (on 64 bit) but also for max_int and
++ * Int32.max_int, there are overall four cases:
++ *
++ * For 32 bit and 64 bit arches:
++ *    - 1073741822 -> 2**30-2 or max_int-1 on 32 bit
++ *    - 1073741823 -> 2**30-1 or max_int on 32 bit
++ * Only for 64 bit arches because the integer doesn't fit on 32 bit:
++ *    - 2147483646 -> 2**31-2 or Int32.max_int-1
++ *    - 2147483647 -> 2**31-1 or Int32.max_int
++ *)
++let is_nan_version = function
++  | 1073741822 -> true
++  | 1073741823 -> true
++  (* The following two conditions can only be true on 64 bit arches, because
++   * only there is Int32.max_int representable as an ocaml integer with only
++   * 31 bits.
++   * We cannot write the numbers 2147483646 and 2147483647 as literals or
++   * otherwise the code cannot compile on 32 bit architectures. *)
++  | i when Int32.to_int Int32.max_int > 0 && i = Int32.to_int Int32.max_int - 1
++    ->
++      true
++  | i when Int32.to_int Int32.max_int > 0 && i = Int32.to_int Int32.max_int ->
++      true
++  | _ -> false
++
++let nan_version = 1073741822
++
+ (** Encode - Decode *)
+ 
+ (* Specialized hashtable for encoding strings efficiently. *)
+@@ -170,7 +202,7 @@ let pp_vpkg pp fmt vpkg =
+   let dummy p v = { Cudf.default_package with Cudf.package = p; version = v } in
+   match vpkg with
+   | (p, None) -> (
+-      match pp (dummy p Util.max32int) with
++      match pp (dummy p nan_version) with
+       | (p, None, _, _) -> Format.fprintf fmt "%s" p
+       | (p, Some a, _, _) -> Format.fprintf fmt "%s:%s" p a)
+   | (p, Some (c, v)) -> (
+--- a/src/common/cudfAdd.mli
++++ b/src/common/cudfAdd.mli
+@@ -164,6 +164,12 @@ val get_package_list : ('a, 'b list ref)
+ (** normalize_set l returns the list l without any duplicate element. *)
+ val normalize_set : int list -> int list
+ 
++(** Check if a CUDF version is nan *)
++val is_nan_version : int -> bool
++
++(** Version constant for impossible constraint *)
++val nan_version : int
++
+ (** {2 Formatting, printing, converting to string. } *)
+ 
+ val string_of : (Format.formatter -> 'a -> 'b) -> 'a -> string
+--- a/src/deb/debcudf.ml
++++ b/src/deb/debcudf.ml
+@@ -258,8 +258,7 @@ let get_real_name name =
+ let get_real_version tables (cudfname, cudfversion) =
+   let (debname, arch) = get_real_name cudfname in
+   try
+-    if cudfversion = Util.max32int || cudfversion = Util.max32int - 1 then
+-      (debname, arch, "nan")
++    if CudfAdd.is_nan_version cudfversion then (debname, arch, "nan")
+     else
+       let m = !(Util.IntHashtbl.find tables.reverse_table cudfversion) in
+       try (debname, arch, SMap.find debname m)
+@@ -325,10 +324,10 @@ let loadlp ?native_arch ?package_arch ta
+          let vencname = "--virtual-" ^ encname in
+          let vvencname = "--virtual--versioned-" ^ encname in
+          match constr with
+-         | None -> [(vencname, Some (`Eq, Util.max32int - 1))]
++         | None -> [(vencname, Some (`Eq, CudfAdd.nan_version))]
+          | Some ("=", v) ->
+              let constr = Some (`Eq, get_cudf_version tables (name, v)) in
+-             [(vvencname, constr); (vencname, Some (`Eq, Util.max32int - 1))]
++             [(vvencname, constr); (vencname, Some (`Eq, CudfAdd.nan_version))]
+          | _ ->
+              fatal
+                "This should never happen : a provide can be either = or \
+--- a/src/pef/pefcudf.ml
++++ b/src/pef/pefcudf.ml
+@@ -150,8 +150,7 @@ let get_cudf_version tables (package, ve
+ (* cudf -> pef *)
+ let get_real_version tables (p, i) =
+   let n = try fst (ExtString.String.split p "%3a") with Invalid_string -> p in
+-  if i = Util.max32int || i = Util.max32int - 1 then
+-    (CudfAdd.decode n, None, "nan")
++  if CudfAdd.is_nan_version i then (CudfAdd.decode n, None, "nan")
+   else
+     try (CudfAdd.decode n, None, Hashtbl.find tables.reverse_table (n, i))
+     with Not_found ->
+--- a/tests/DebianPackages/dune
++++ b/tests/DebianPackages/dune
+@@ -38,8 +38,19 @@
+    %{target}
+    (run grep-dctrl --not --exact -F Package grep %{p}))))
+ 
++; In the past, dose-ceve used the integer 2147483646 to denote a "nan" version
++; on 64bit and 1073741822 on 32bit systems. The former integer is too large for
++; ocaml on 32bit architectures and to produce the same output on all platforms,
++; the "nan" integer is now 1073741822 everywhere. Instead of replacing the
++; existing cudf file with one that uses 1073741822 instead of 2147483646, we
++; run it through sed, to not unnecessarily increase the size of the repository.
++
+ (rule
+  (target debian_20201226T144309Z.cudf)
+  (deps debian_20201226T144309Z.cudf.xz)
+  (action
+-  (run unxz --keep %{deps})))
++  (with-stdout-to
++   %{target}
++   (with-stdin-from
++    %{deps}
++    (system "unxz --to-stdout | sed s/2147483646/1073741822/g")))))

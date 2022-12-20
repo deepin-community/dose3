@@ -1,0 +1,4 @@
+Package: source-package
+Architecture: any
+Version: 1
+Build-Depends: provided (>= 3)

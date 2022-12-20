@@ -1,0 +1,67 @@
+Packaging CUDF solvers in Debian
+================================
+
+Each CUDF solver should ship a "CUDF solver specification" file under
+`/usr/share/cudf/solvers/`, describing how to invoke the solver and its
+compatibility level with the CUDF standard.
+
+A precise description of the (very simple) CUDF solver specification format can
+be found in the `README.cudf-solvers` file in the "apt-cudf" package.
+
+
+Integration with APT
+====================
+
+APT can talk to external solvers by the means of the External Dependency Solver
+Protocol (EDSP). To reduce the burden on APT implementors and dependencies over
+specific features of the CUDF standard, the EDSP protocol is closer to typical
+APT syntaxes than to CUDF. Therefore, some plumbing is needed to use native
+CUDF solvers as external (EDSP-based) solvers for APT. The apt-cudf package
+provides such plumbing.
+
+The architecture is as follows:
+
+                EDSP                  CUDF
+        APT  <-------->  apt-cudf  <-------->  CUDF solver
+
+APT invokes apt-cudf as its external solver, which in turns invoke a proper
+CUDF solver. In such pipeline, apt-cudf plays man in the middle and performs
+the needed translations.
+
+The default directories where APT and apt-cudf look for solvers are as follows:
+
+- APT       looks for (EDSP) solver *executables* into     `/usr/lib/apt/solvers/`
+- apt-cudf  looks for (CUDF) solver *specifications* into  `/usr/share/cudf/solvers/`
+
+CUDF solvers can reside anywhere they please, as long as there is a CUDF solver
+specification pointing to them under `/usr/share/cudf/solvers/` (see Section
+above).
+
+For each CUDF solver that should be used as an external APT solver a (symbolic)
+link pointing to `/usr/bin/apt-cudf` must exist under `/usr/lib/apt/solvers/`.
+Upon invocation, apt-cudf will use the link name to lookup the corresponding
+CUDF solver specification.
+
+
+Trigger
+-------
+
+The apt-cudf package comes with a trigger that monitors the
+`/usr/share/cudf/solvers/` directory for the installation of CUDF solver
+specifications. Upon activation, the trigger creates a symbolic link under
+`/usr/lib/apt/solvers`. Therefore:
+
+- If you are packaging a CUDF solver and would like it to be used as an
+  external solver for APT, you don't have to do anything special (besides
+  installing a proper CUDF solver specification for it under
+  `/usr/share/cudf/solvers/`).
+
+  Please note however that it will be usable as an external solver for APT only
+  upon installation of the "apt-cudf" package. If your CUDF solver is
+  specifically meant for apt, consider a Depends or a Recommends on apt-cudf.
+
+- If you want to use a CUDF solver as an external solver for APT, you just have
+  to install the "apt-cudf" package.
+
+
+ -- Stefano Zacchiroli <zack@debian.org>, Fri, 10 Jun 2011 17:30:30 +0200

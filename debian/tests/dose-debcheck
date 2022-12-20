@@ -1,0 +1,15 @@
+#!/bin/sh
+
+set -e
+
+this=dose-debcheck
+indir=debian/tests/repos
+outdir=${ADT_ARTIFACTS}/${this}
+mkdir -p ${outdir}
+
+packfile=$indir/Packages1
+base=$(basename $packfile)
+
+dose-debcheck ${packfile} \
+    | tee ${outdir}/${base}.out \
+    | grep -q "broken-packages: 0"

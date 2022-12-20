@@ -1,0 +1,10 @@
+Document: debcheck-primer
+Title: The dose-debcheck Primer
+Author: Pietro Abate and Ralf Treinen
+Abstract: This document describes how to use dose-debcheck to check 
+ installability of Debian packages according to their meta-data.
+Section: Debian
+
+Format: HTML
+Index: /usr/share/doc/dose-doc/debcheck-primer.html
+Files: /usr/share/doc/dose-doc/debcheck-primer.html

@@ -1,0 +1,69 @@
+Format: https://www.debian.org/doc/packaging-manuals/copyright-format/1.0/
+Upstream-Name: dose
+Upstream-Contact: Pietro Abate <pietro.abate@pps.jussieu.fr>
+Source: https://gforge.inria.fr/projects/dose/
+
+Files: *
+Copyright: © 2009-2012 Pietro Abate
+License: LGPL-3+
+
+Files: src/common/format822.ml
+Copyright: © 2005-2009 Jérôme Vouillion, Stefano Zacchiroli, Pietro Abate
+License: LGPL-3+
+
+Files: src/algo/statistics.ml
+Copyright: © 2008 Jaap Boender, Stefano Zacchiroli, Pietro Abate
+License: LGPL-3+
+
+Files: src/common/edosSolver.ml src/common/edosSolver.mli
+Copyright: © 2005-2009 Jérôme Vouillion
+License: LGPL-3+
+
+Files: src/common/util.ml
+Copyright: © 2009 Alain Frisch, Pietro Abate
+License: LGPL-3+
+
+Files: src/common/url.ml src/common/url.mli src/versioning/debian.ml
+Copyright: © 2011 Ralf Treinen
+License: LGPL-3+
+
+Files: debian/*
+Copyright: © 2011, 2012 Ralf Treinen, Stefano Zacchiroli
+License: LGPL-3+
+
+Files: debian/update-cudf-solvers
+Copyright: © 2011 Stefano Zacchiroli
+License: LGPL-3+
+
+Files: src/common/shell_lexer.mll
+Copyright: © 2015 Johannes Schauer <j.schauer@email.de>
+License: LGPL-3+
+
+Files: scripts/pack.ml
+Copyright: 2011 OCamlPro SAS
+Comment:
+ Some versions of this file had a copyright header claiming the file was
+ distributed under the terms of the "GNU Public License version 3.0". Later
+ releases clarified that the GPL3 was meant.
+ .
+ This file only serves as a helper during compilation (it packs together all
+ mli files into one file for ocamldoc) and its contents are not linked or
+ otherwise copied into the final binaries. Thus, the final binaries of the
+ dose3 packages are still distributed under the terms of the LGPL-3+.
+License: GPL-3
+ This file is distributed under the terms of the GNU General Public License
+ version 3.0.
+ .
+ On Debian systems, the complete text of the GNU General Public License version
+ 3 can be found in `/usr/share/common-licenses/GPL-3'.
+
+License: LGPL-3+
+ This library is free software: you can redistribute it and/or modify
+ it under the terms of the GNU Lesser General Public License as
+ published by the Free Software Foundation, either version 3 of the
+ License, or (at your option) any later version.  A special linking
+ exception to the GNU Lesser General Public License applies to this
+ library, see the COPYING file for more information.
+ .
+ On Debian systems, the complete text of the latest GNU Lesser General
+ Public License can be found in `/usr/share/common-licenses/LGPL-3'.

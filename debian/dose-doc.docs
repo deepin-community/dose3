@@ -1,0 +1,4 @@
+_build/default/_doc/_html/*
+doc/apt-cudf/*
+doc/apt-external-solvers.primer/apt-external-solvers.html
+doc/debcheck.primer/debcheck-primer.html

@@ -1,0 +1,168 @@
+algo:
+=====
+
+bench.ml:
+2010 Pietro Abate <pietro.abate@pps.jussieu.fr>
+2010 Mancoosi Project
+LGPL >=3 with linking exception
+
+defaultgraphs.ml, depsolver_int.ml, depsolver.ml[i], diagnostic_int.ml,
+diagnostic.ml, strongconflicts_int.ml, strongconflicts.ml, strongdeps_int.ml,
+strongdeps.ml, tests.ml
+2009 Pietro Abate <pietro.abate@pps.jussieu.fr> 
+2009 Mancoosi Project
+same licence
+
+dominators.ml
+2009-2010 Pietro Abate <pietro.abate@pps.jussieu.fr>          
+             and Jaap Boender <boender@pps.jussieu.fr>                          
+2009-2010 Mancoosi Project
+same licence
+
+predications.ml[i]
+2009,2010 Pietro Abate <pietro.abate@pps.jussieu.fr>
+same licence
+
+statistics.ml
+2008 Stefano Zacchiroli <zack@debian.org> and 
+ * Jaap Boender <boender@pps.jussieu.fr> and
+ * Pietro Abate <pietro.abate@pps.jussieu.fr>
+GPL !!!! but this is being changed upstream
+
+
+==========================================================================
+
+applications:
+=============
+
+boilerplates/boilerplate.ml: Pietro Abate
+LGPL >=3 with linking exception
+
+ceve.ml:
+2009-10 Pietro Abate <pietro.abate@pps.jussieu.fr> 
+Jaap Boender <boender@pps.jussieu.fr>
+2009-10 Mancoosi Project
+same licence
+
+deb-buildcheck.ml, distcheck.ml, smallworld.ml, strong-deps.ml:
+2009 Pietro Abate <pietro.abate@pps.jussieu.fr>
+2009 Mancoosi Project
+
+strong-conflicts.ml:
+2009-2010 Jaap Boender 
+2009-2010 Mancoosi Project
+
+test.ml:
+2010 Pietro Abate <pietro.abate@pps.jussieu.fr> 
+2010 Mancoosi Project 
+
+===========================================================================
+
+common:
+=======
+
+cudfAdd.ml, 
+
+2009 Pietro Abate <pietro.abate@pps.jussieu.fr> 
+2009 Mancoosi Project
+
+edosSolver.ml[i]:
+2005-2009 Jérôme Vouillon 
+
+extBenchmark.ml[i]:
+2010 Pietro Abate <pietro.abate@pps.jussieu.fr> 
+2010 Mancoosi Project
+
+input.ml[i]. mdf.ml. tests.ml:
+2009 Pietro Abate <pietro.abate@pps.jussieu.fr>
+2009 Mancoosi Project
+
+minisatSolver.ml   
+??????
+
+url.ml[i]:
+GPL !!!!
+
+util.ml[i]:
+2009  <pietro.abate@pps.jussieu.fr>
+Part of  the following code is borrowed from Cduce.
+Copyright: Alain Frisch     
+(this has been removed upstream)
+
+util.mli:
+ (C) 2009 Pietro Abate <pietro.abate@pps.jussieu.fr>
+2009 Mancoosi Project 
+LGPL3+ (same licence as the rest)
+
+==========================================================================
+
+db:
+===
+backend.ml,idbr.ml, pgsql.ml, sql.ml[i]:
+2009 Pietro Abate <pietro.abate@pps.jussieu.fr>
+2009 Mancoosi Project
+LGPL3+
+
+sqlite/sqlitext/connection.h:
+Copyright (C) 2004-2006 Gerhard Häring <gh@ghaering.de>
+special licence (no problem)
+
+other files in sqlite: ??????
+
+==========================================================================
+
+deb:
+====
+apt.ml, debcudf.ml[i], debutil.ml, format822.ml, packages.ml, release.ml,
+sources.ml, tests.ml
+2009 Pietro Abate <pietro.abate@pps.jussieu.fr>
+2009 Mancoosi Project 
+
+bench.ml:
+2010 Pietro Abate <pietro.abate@pps.jussieu.fr> 
+2010 Mancoosi Project
+
+evolution.ml:
+2011 Pietro Abate
+2011 Mancoosi Project
+
+architecture.ml[i]
+2010 Ralf Treinen <ralf.treinen@pps.jussieu.fr>
+
+version.ml:
+2009  Jaap Boender <jaap.boender@pps.jussieu.fr>
+
+version.mli:
+2009 Pietro Abate <pietro.abate@pps.jussieu.fr>
+2009 Mancoosi Project
+
+LGPL3+
+
+==========================================================================
+
+eclipse
+=======
+
+eclipsecudf.ml, packages.ml, version.ml
+2009 Pietro Abate <pietro.abate@pps.jussieu.fr>
+2009 Mancoosi Project
+LGPL3+
+
+==========================================================================
+
+rpm
+===
+hdlist.ml, librpm_stubs.cm myocamlbuild.ml, packages.ml, rpmcudf.ml,
+tests.ml, version.ml
+2009 Pietro Abate <pietro.abate@pps.jussieu.fr> 
+2009 Mancoosi Project
+LGPL3+
+
+==========================================================================
+
+myocamlbuild: 
+(*  Copyright (C) 2009  Pietro Abate <pietro.abate@pps.jussieu.fr>        *)
+LGPL3+, linking exc
+
+=======================================================================
+

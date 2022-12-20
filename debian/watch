@@ -1,0 +1,2 @@
+version=4
+https://gitlab.com/irill/dose3/tags?sort=updated_desc .*/archive/[0-9.]+/dose3-([0-9.]+)\.tar\.gz

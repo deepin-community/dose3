@@ -1,0 +1,62 @@
+dose-distcheck (5.0-2) unstable; urgency=medium
+
+  * The --latest option of dose-{dist,deb,rpm,eclipse}check now takes an
+    integer argument. If you used "--latest" before, please replace it by
+    "--latest 1".
+
+ -- Ralf Treinen <treinen@debian.org>  Tue, 05 Jul 2016 16:43:59 +0200
+
+dose-distcheck (4.2-1) experimental; urgency=medium
+
+  * The output version of the yaml output has been bumped to 1.1
+
+ -- Ralf Treinen <treinen@debian.org>  Sun, 13 Mar 2016 20:02:22 +0100
+
+dose-distcheck (4.1-4) unstable; urgency=medium
+  Dose 4.1 has introduced a change in the output format, unfortunately without
+  bumping the version number of the output format. This concerns:
+  - names of source packages: until 4.0 these where displayed as "src:name".
+    In 4.1, this artificial "src:" prefix has been dropped.
+  - virtual packages: until 4.0, these where displayed in dependency chains
+    (as part of explanations of non-installability) as "--virtual-name".
+    In 4.1, this artificial "--virtual-" prefix has been dropped.
+
+ -- Ralf Treinen <treinen@debian.org>  Mon, 31 Aug 2015 10:47:01 +0200
+
+dose-distcheck (4.0-1) unstable; urgency=low
+
+  (1.) With the 4.0 release, the following command line options of
+       dose-builddebcheck were renamed:
+
+         --defaultedMAforeign -> --deb-defaulted-m-a-foreign
+         --DropBuildIndep     -> --deb-drop-b-d-indep
+         --IncludeExtraSource -> --deb-include-extra-source
+         --profiles           -> --deb-profiles
+
+  (2.) Additionally, the output of dose-distcheck and dose-builddebcheck now
+       displays package names with architecture specification in the same order
+       as other debian tools, that is <package>:<architecture>. As an example,
+       the following snippet from an older dose-builddebcheck run...
+
+       [...]
+          -
+           package: amd64:adduser
+           version: 3.113+nmu3
+           architecture: all
+           essential: false
+       [...]
+
+       ...will now look like the following:
+
+       [...]
+          -
+           package: adduser:amd64
+           version: 3.113+nmu3
+           architecture: all
+           essential: false
+       [...]
+
+  (3.) Finally, the YAML output now carries a format identifier. Scripts that
+       parse the dose-debcheck explanations have to to be adapted.
+
+ -- Ralf Treinen <treinen@debian.org>  Mon, 31 Aug 2015 10:47:01 +0200
