@@ -39,3 +39,4 @@ override_dh_auto_test-arch:
 ifeq (,$(filter nocheck,$(DEB_BUILD_OPTIONS)))
 	dune runtest -p dose3
 endif
+override_dh_missing:
