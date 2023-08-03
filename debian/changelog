@@ -1,3 +1,9 @@
+dose3 (6.0.1-deepin2) unstable; urgency=medium
+
+  * fix build error.
+
+ -- LiChengGang <lichenggang@uniontech.com>  Thu, 03 Aug 2023 21:30:52 +0800
+
 dose3 (6.0.1-deepin1) unstable; urgency=medium
 
   * Rebuild

@@ -19,14 +19,14 @@ override_dh_auto_build-arch:
 		debian/update-cudf-solvers > debian/update-cudf-solvers.8
 
 override_dh_auto_build-indep:
-	dune build -p dose3 @doc
+	dune build -p dose3
 	# running targets manually because we don't want to build the "pages"
 	make -C doc/debcheck.primer
 	make -C doc/apt-external-solvers.primer
 	make -C doc/manpages html
 
 override_dh_auto_install-arch:
-	dune install -p dose3 --destdir=$(DESTDIR) --prefix=/usr --libdir=..$(OCAML_STDLIB_DIR)
+	dune install -p dose3 --destdir=$(DESTDIR) --prefix=/usr --libdir=$(OCAML_STDLIB_DIR)
 	rm -f $(DESTDIR)/usr/doc/dose3/README.git
 	rm -f $(DESTDIR)/usr/doc/dose3/README.architecture
 	rm -f $(DESTDIR)/usr/doc/dose3/CHANGES
