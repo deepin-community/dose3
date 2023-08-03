@@ -26,7 +26,7 @@ override_dh_auto_build-indep:
 	make -C doc/manpages html
 
 override_dh_auto_install-arch:
-	dune install -p dose3 --destdir=$(DESTDIR) --prefix=/usr --libdir=$(OCAML_STDLIB_DIR)
+	dune install -p dose3 --destdir=$(DESTDIR) --prefix=/usr --libdir=..$(OCAML_STDLIB_DIR)
 	rm -f $(DESTDIR)/usr/doc/dose3/README.git
 	rm -f $(DESTDIR)/usr/doc/dose3/README.architecture
 	rm -f $(DESTDIR)/usr/doc/dose3/CHANGES
