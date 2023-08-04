@@ -323,9 +323,13 @@ def main():
                 print("Overwriting expected file: %s" % expected)
                 fixtest(expected, cmd)
     else:
-        unittest.TextTestRunner(verbosity=2).run(
+        result = unittest.TextTestRunner(verbosity=2).run(
             suite(args.inputfile[0], args.runtest, args.rungroup, args.slow)
         )
+        if result.wasSuccessful():
+            exit(0)
+        else:
+            exit(1)
 
 
 if __name__ == "__main__":

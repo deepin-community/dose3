@@ -470,7 +470,7 @@ let add_dummy universe request dummy =
   let universe = Cudf.load_universe (dummy :: pkglist) in
   (universe, dummy)
 
-let remove_dummy ?(explain = false) pre (dummy, d) =
+let remove_dummy ~explain pre (dummy, d) =
   if Diagnostic.is_solution d then
     let is =
       List.remove_if (Cudf.( =% ) dummy) (Diagnostic.get_installationset d)
@@ -484,10 +484,10 @@ let check_request_using ?call_solver ?dummy ?(explain = false)
   match (call_solver, dummy) with
   | (None, None) ->
       let (u, r) = add_dummy universe request dummy_request in
-      remove_dummy pre (r, edos_install u r)
+      remove_dummy ~explain pre (r, edos_install u r)
   | (None, Some dummy) ->
       let (u, r) = add_dummy universe request dummy in
-      remove_dummy pre (r, edos_install u r)
+      remove_dummy ~explain pre (r, edos_install u r)
   | (Some call_solver, None) -> (
       try
         let (presol, sol) = call_solver (pre, universe, request) in
@@ -496,7 +496,7 @@ let check_request_using ?call_solver ?dummy ?(explain = false)
       | CudfSolver.Unsat when not explain -> Unsat None
       | CudfSolver.Unsat when explain ->
           let (u, r) = add_dummy universe request dummy_request in
-          remove_dummy pre (r, edos_install u r))
+          remove_dummy ~explain pre (r, edos_install u r))
   | (Some call_solver, Some dummy) -> (
       let (u, dr) = add_dummy universe request dummy in
       let dr_constr = (dr.Cudf.package, Some (`Eq, dr.Cudf.version)) in
@@ -511,7 +511,7 @@ let check_request_using ?call_solver ?dummy ?(explain = false)
       | CudfSolver.Unsat when not explain -> Unsat None
       | CudfSolver.Unsat when explain -> (
           let (u, r) = add_dummy universe request dummy in
-          match remove_dummy pre (r, edos_install u r) with
+          match remove_dummy ~explain pre (r, edos_install u r) with
           | Sat _ as sol ->
               warning "External and Internal Solver do not agree." ;
               sol

@@ -11,7 +11,7 @@
 (**************************************************************************************)
 
 (* More info about small world networks
-  http://en.wikipedia.org/wiki/Small-world_network *)
+   http://en.wikipedia.org/wiki/Small-world_network *)
 
 open Common
 open Algo
@@ -52,9 +52,8 @@ module Options = struct
 
   let prefix = StdOpt.str_option ~default:"" ()
 
-  open OptParser
+  open OptParser;;
 
-  ;;
   add
     options
     ~long_name:"prefix"
@@ -242,6 +241,6 @@ let main () =
   if not (OptParse.Opt.get Options.generic) then t := generic :: !t ;
   run outch ("Dependency Graph Statistical Analysis" >::: !t) ;
   close_out outch
-
 ;;
+
 main ()

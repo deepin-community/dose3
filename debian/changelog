@@ -1,8 +1,24 @@
-dose3 (6.0.1-deepin1) unstable; urgency=medium
+dose3 (7.0.0-2) unstable; urgency=medium
 
-  * Rebuild
+  * Team upload
+  * Fix build with recent dune
 
- -- Deepin Packages Builder <packages@deepin.org>  Fri, 11 Nov 2022 17:56:35 +0800
+ -- Stéphane Glondu <glondu@debian.org>  Sat, 15 Jul 2023 06:48:32 +0200
+
+dose3 (7.0.0-1) unstable; urgency=medium
+
+  * Team upload
+  * New upstream release
+
+ -- Stéphane Glondu <glondu@debian.org>  Mon, 14 Feb 2022 11:47:12 +0100
+
+dose3 (6.0.1-3) unstable; urgency=medium
+
+  * Team upload
+  * Fix compilation with ocamlgraph 2.0.0 (Closes: #1002498)
+  * Bump Standards-Version to 4.6.0
+
+ -- Stéphane Glondu <glondu@debian.org>  Fri, 24 Dec 2021 11:34:33 +0100
 
 dose3 (6.0.1-2) unstable; urgency=medium
 

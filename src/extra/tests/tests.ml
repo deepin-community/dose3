@@ -13,6 +13,7 @@
 module Pcre = Re_pcre
 open OUnit2
 open Dose_common
+open Dose_extra
 
 let returns_result ?(printer = fun _ -> "(PRINTER NOT SPECIFIED)")
     function_to_test expected_result args _ctx =
@@ -356,9 +357,8 @@ let all =
          "cone" >::: make_test_cases cone_cases;
          "cudfadd" >::: make_test_cases latest_cases ]
 
-let main () = OUnit2.run_test_tt_main all
+let main () = OUnit2.run_test_tt_main all;;
 
-;;
 main ()
 
 (* tests of module url *)
@@ -371,9 +371,8 @@ let check s =
     else s
   in
   if normalized_input <> result then print_string ("Error parsing: " ^ s ^ "\n")
-
 ;;
-check "deb://kjkdf?dd"
 
-;;
+check "deb://kjkdf?dd";;
+
 check "deb:///ab/cd"

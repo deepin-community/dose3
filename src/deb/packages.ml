@@ -19,6 +19,7 @@
 
 open ExtLib
 open Dose_common
+open Dose_extra
 
 include Util.Logging (struct
   let label = "dose_deb.packages"

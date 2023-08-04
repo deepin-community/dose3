@@ -26,12 +26,10 @@ module Options = struct
     let options = options
   end)
 
-  include StdOptions.DistribOptions
+  include StdOptions.DistribOptions;;
 
-  ;;
-  StdOptions.DistribOptions.add_debian_options options
+  StdOptions.DistribOptions.add_debian_options options;;
 
-  ;;
   StdOptions.DistribOptions.add_opam_options options
 
   let dot = StdOpt.store_true ()
@@ -42,9 +40,8 @@ module Options = struct
 
   let conj_only = StdOpt.store_true ()
 
-  open OptParser
+  open OptParser;;
 
-  ;;
   add
     options
     ~long_name:"dot"
@@ -172,6 +169,6 @@ let main () =
           let pkg = CudfAdd.string_of_package p in
           Printf.fprintf stdout "%s , %d, %d, %d, %d, %d\n" pkg rs s rd d diff)
         (List.sort ~cmp:(fun (_, x, _, _, _, _) (_, y, _, _, _, _) -> y - x) l)
-
 ;;
+
 main ()

@@ -1,4 +1,4 @@
-open Dose_common
+open Dose_extra
 open Dose_pef
 
 val parse_multiarch : string * ('a * string) -> Packages_types.multiarch

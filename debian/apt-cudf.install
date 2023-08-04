@@ -1,0 +1,4 @@
+debian/apt-cudf.conf			etc
+debian/update-cudf-solvers		usr/sbin
+src/applications/scripts/apt-cudf-get	usr/bin
+usr/bin/apt-cudf

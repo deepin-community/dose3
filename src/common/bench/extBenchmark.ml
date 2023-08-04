@@ -236,9 +236,8 @@ module Options = struct
 
   let description = ""
 
-  let options = OptParser.make ~description ()
+  let options = OptParser.make ~description ();;
 
-  ;;
   let open OptParser in
   add
     options

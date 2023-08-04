@@ -27,12 +27,10 @@ module Options = struct
     let options = options
   end)
 
-  include StdOptions.DistribOptions
+  include StdOptions.DistribOptions;;
 
-  ;;
-  StdOptions.DistribOptions.add_debian_options options
+  StdOptions.DistribOptions.add_debian_options options;;
 
-  ;;
   StdOptions.DistribOptions.add_opam_options options
 
   let naive = StdOpt.store_true ()
@@ -43,9 +41,8 @@ module Options = struct
 
   let approximate = StdOpt.float_option ()
 
-  open OptParser
+  open OptParser;;
 
-  ;;
   add
     options
     ~short_name:'n'
@@ -154,6 +151,6 @@ let main () =
   in
   D.output_graph oc dom_graph ;
   if oc <> stdout then close_out oc
-
 ;;
+
 main ()

@@ -10,7 +10,7 @@
 (*  library, see the COPYING file for more information.                               *)
 (**************************************************************************************)
 
-open Dose_common
+open Dose_extra
 
 (** {2 Exceptions} *)
 
@@ -176,12 +176,12 @@ class package :
      end
 
 (* [parse_package_stanza filter extras par]. Stanzas are filterd out
-   according to the predicate [filter]. 
-   
+   according to the predicate [filter].
+
    Extra fields can be parsed and added to the stanza.
    [extras] is a list of tuples where the first element is a label
-   indentifing a field and the second element is a parsing function. Ex : 
-   
+   indentifing a field and the second element is a parsing function. Ex :
+
      [extras:[("extrafield", Some(parse_s parse_string))]] *)
 val parse_package_stanza :
   filter:(Format822.stanza -> bool) option ->
@@ -214,7 +214,7 @@ val input_raw_in :
 (** {2 Low Level Parsing Functions} *)
 
 (* [packages_parser fname stanza_parser f822_parser].
-   Parse the entire file [fname] parsing the raw file using [f822_parser] 
+   Parse the entire file [fname] parsing the raw file using [f822_parser]
    while filtering out unwanted stanzas using the [stanza_parser]. *)
 val packages_parser :
   string ->

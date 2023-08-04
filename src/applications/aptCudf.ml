@@ -14,6 +14,7 @@
 
 open ExtLib
 open Dose_common
+open Dose_extra
 open Dose_debian
 open Dose_doseparse
 module Pcre = Re_pcre
@@ -51,9 +52,8 @@ module Options = struct
 
   let foreign_archs = StdOptions.str_list_option ()
 
-  open OptParser
+  open OptParser;;
 
-  ;;
   add
     options
     ~long_name:"conf"
@@ -156,21 +156,21 @@ type critopt = PlainCrit of string | ExtCrit of Criteria_types.criteria
 
 (* apt-cudf.conf example :
 
-solver: mccs-cbc , mccs-lpsolve
-upgrade: -lex[-new,-removed,-notuptodate]
-dist-upgrade: -lex[-notuptodate,-new,-removed]
-install: -lex[-removed,-changed]
-remove: -lex[-removed,-changed]
-trendy: -lex[-removed,-notuptodate,-unsat_recommends,-new]
-paranoid: -lex[-removed,-changed]
+   solver: mccs-cbc , mccs-lpsolve
+   upgrade: -lex[-new,-removed,-notuptodate]
+   dist-upgrade: -lex[-notuptodate,-new,-removed]
+   install: -lex[-removed,-changed]
+   remove: -lex[-removed,-changed]
+   trendy: -lex[-removed,-notuptodate,-unsat_recommends,-new]
+   paranoid: -lex[-removed,-changed]
 
-solver: *
-upgrade: -new,-removed,-notuptodate
-dist-upgrade: -notuptodate,-new,-removed
-install: -removed,-changed
-remove: -removed,-changed
-trendy: -removed,-notuptodate,-unsat_recommends,-new
-paranoid: -removed,-changed
+   solver: *
+   upgrade: -new,-removed,-notuptodate
+   dist-upgrade: -notuptodate,-new,-removed
+   install: -removed,-changed
+   remove: -removed,-changed
+   trendy: -removed,-notuptodate,-unsat_recommends,-new
+   paranoid: -removed,-changed
 *)
 let parse_conf_file fname =
   let ic = open_in fname in
@@ -218,13 +218,13 @@ let parse_conf_file fname =
     fatal "%s" (Format822.error lexbuf msg)
 
 (* the priority to choose criteria is:
-  1. --criteria-plain
-  2. --criteria
-  3. EDSP Preferences field
-  4. default criteria for given solver in /etc/apt-cudf.conf and EDSP action
-  5. default criteria for "*" default solver in /etc/apt-cudf.conf and EDSP action
-  6. default criteria as hardcoded above for given EDSP action
-  7. hardcoded paranoid criteria *)
+   1. --criteria-plain
+   2. --criteria
+   3. EDSP Preferences field
+   4. default criteria for given solver in /etc/apt-cudf.conf and EDSP action
+   5. default criteria for "*" default solver in /etc/apt-cudf.conf and EDSP action
+   6. default criteria as hardcoded above for given EDSP action
+   7. hardcoded paranoid criteria *)
 let choose_criteria ~conffile solver request =
   let conf =
     if Sys.file_exists conffile then parse_conf_file conffile else []
@@ -653,6 +653,6 @@ let main () =
     if summary.notchange <> [] && OptParse.Opt.get Options.verbose >= 1 then
       Format.printf "UnChanged: %a@." pp_pkg_list (summary.notchange, univ)) ;
   if !empty then print_progress ~i:100 "No packages removed or installed"
-
 ;;
+
 main ()

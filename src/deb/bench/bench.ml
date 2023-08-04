@@ -57,6 +57,6 @@ let run () =
       test_cudf_list ();
       test_universe ();
       test_maps () ]
-
 ;;
+
 ExtBenchmark.main run

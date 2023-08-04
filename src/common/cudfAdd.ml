@@ -47,6 +47,38 @@ end)
 
 let to_set l = List.fold_right Cudf_set.add l Cudf_set.empty
 
+(* In the past, the special version denoting an impossible constraint was
+ * different between 32 and 64 bit architectures. The version constant is now
+ * 1073741822 (or 2**30-2) everywhere but to also be able to read in cudf files
+ * that were produced on 64 bit in the past, we also interpret 2147483646 as
+ * the special version. Since the codebase did not only check for max_int-1 (on
+ * 32 bit) or Int32.max_int-1 (on 64 bit) but also for max_int and
+ * Int32.max_int, there are overall four cases:
+ *
+ * For 32 bit and 64 bit arches:
+ *    - 1073741822 -> 2**30-2 or max_int-1 on 32 bit
+ *    - 1073741823 -> 2**30-1 or max_int on 32 bit
+ * Only for 64 bit arches because the integer doesn't fit on 32 bit:
+ *    - 2147483646 -> 2**31-2 or Int32.max_int-1
+ *    - 2147483647 -> 2**31-1 or Int32.max_int
+ *)
+let is_nan_version = function
+  | 1073741822 -> true
+  | 1073741823 -> true
+  (* The following two conditions can only be true on 64 bit arches, because
+   * only there is Int32.max_int representable as an ocaml integer with only
+   * 31 bits.
+   * We cannot write the numbers 2147483646 and 2147483647 as literals or
+   * otherwise the code cannot compile on 32 bit architectures. *)
+  | i when Int32.to_int Int32.max_int > 0 && i = Int32.to_int Int32.max_int - 1
+    ->
+      true
+  | i when Int32.to_int Int32.max_int > 0 && i = Int32.to_int Int32.max_int ->
+      true
+  | _ -> false
+
+let nan_version = 1073741822
+
 (** Encode - Decode *)
 
 (* Specialized hashtable for encoding strings efficiently. *)
@@ -67,9 +99,9 @@ module DecodingHashtable = OCAMLHashtbl.Make (struct
   let hash s = (Char.code s.[1] * 1000) + Char.code s.[2]
 end)
 
-(*  "hex_char char" returns the ASCII code of the given character
-    in the hexadecimal form, prefixed with the '%' sign.
-    e.g. hex_char '+' = "%2b" *)
+(* "hex_char char" returns the ASCII code of the given character
+   in the hexadecimal form, prefixed with the '%' sign.
+   e.g. hex_char '+' = "%2b" *)
 (* let hex_char char = Printf.sprintf "%%%02x" (Char.code char);; *)
 
 (* "init_hashtables" initializes the two given hashtables to contain:
@@ -95,9 +127,8 @@ let init_hashtables enc_ht dec_ht =
    one for encoding and one for decoding. *)
 let enc_ht = EncodingHashtable.create 256
 
-let dec_ht = DecodingHashtable.create 256
+let dec_ht = DecodingHashtable.create 256;;
 
-;;
 init_hashtables enc_ht dec_ht
 
 (* encode *)
@@ -170,7 +201,7 @@ let pp_vpkg pp fmt vpkg =
   let dummy p v = { Cudf.default_package with Cudf.package = p; version = v } in
   match vpkg with
   | (p, None) -> (
-      match pp (dummy p Util.max32int) with
+      match pp (dummy p nan_version) with
       | (p, None, _, _) -> Format.fprintf fmt "%s" p
       | (p, Some a, _, _) -> Format.fprintf fmt "%s:%s" p a)
   | (p, Some (c, v)) -> (

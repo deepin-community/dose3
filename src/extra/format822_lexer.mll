@@ -44,7 +44,7 @@ let blank = [ ' ' '\t' ]
 let ident = ( [ '!' - '9'] | [';' - '~' ] )+
 let identnosharphypen = ( '!' | '"' | [ '$' - ',' ] | [ '.' - '9'] | [';' - '~' ] )
 (* conform to the Debian Policy *)
-let fieldname = (identnosharphypen ident)
+let fieldname = (identnosharphypen ident?)
 
 rule token_822 = parse
   | "-----BEGIN PGP SIGNED MESSAGE-----"               { PGPHEAD }

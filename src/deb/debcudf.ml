@@ -99,15 +99,15 @@ let add_arch native_arch name = function
   | package_arch -> add_name_arch name package_arch
 
 (* add arch info to a vpkg
- - if it's a :any dependency then just encode the name without arch information :
-   means that this dependency/conflict can be satified by any packages
- - if it is a :native dependency then add the native architecture
- - if it is a package:arch dependency, then encode it as such
- - if the package dependency does not have any annotations :
-   + if the package is architecture all, then all dependencies are interpreted as
-     dependencies on native architecture packages.
-   + otherwise all dependencies are satisfied by packages of the same architecture
-     of the package we are considering
+   - if it's a :any dependency then just encode the name without arch information :
+     means that this dependency/conflict can be satified by any packages
+   - if it is a :native dependency then add the native architecture
+   - if it is a package:arch dependency, then encode it as such
+   - if the package dependency does not have any annotations :
+     + if the package is architecture all, then all dependencies are interpreted as
+       dependencies on native architecture packages.
+     + otherwise all dependencies are satisfied by packages of the same architecture
+       of the package we are considering
 *)
 let add_arch_info ?(native_arch = "") ?(package_arch = "") = function
   | (n, Some "any") -> CudfAdd.encode n
@@ -258,8 +258,7 @@ let get_real_name name =
 let get_real_version tables (cudfname, cudfversion) =
   let (debname, arch) = get_real_name cudfname in
   try
-    if cudfversion = Util.max32int || cudfversion = Util.max32int - 1 then
-      (debname, arch, "nan")
+    if CudfAdd.is_nan_version cudfversion then (debname, arch, "nan")
     else
       let m = !(Util.IntHashtbl.find tables.reverse_table cudfversion) in
       try (debname, arch, SMap.find debname m)
@@ -325,10 +324,10 @@ let loadlp ?native_arch ?package_arch tables l =
          let vencname = "--virtual-" ^ encname in
          let vvencname = "--virtual--versioned-" ^ encname in
          match constr with
-         | None -> [(vencname, Some (`Eq, Util.max32int - 1))]
+         | None -> [(vencname, Some (`Eq, CudfAdd.nan_version))]
          | Some ("=", v) ->
              let constr = Some (`Eq, get_cudf_version tables (name, v)) in
-             [(vvencname, constr); (vencname, Some (`Eq, Util.max32int - 1))]
+             [(vvencname, constr); (vencname, Some (`Eq, CudfAdd.nan_version))]
          | _ ->
              fatal
                "This should never happen : a provide can be either = or \

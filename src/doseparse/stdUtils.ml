@@ -81,15 +81,15 @@ let pp_versions_table fmt (from_cudf, pkglist) =
     pkglist
 
 (* exit code policy :
-Exit codes 0-63 indicate a normal termination of the program, codes
-64-127 indicate abnormal termination of the program (such as parse
-errors, I/O errors).
+   Exit codes 0-63 indicate a normal termination of the program, codes
+   64-127 indicate abnormal termination of the program (such as parse
+   errors, I/O errors).
 
-In case of normal program termination:
-- exit code 0 indicates that all foreground packages are found
-  installable;
-- exit code 1 indicates that at least one foreground package is found
-  uninstallable.
+   In case of normal program termination:
+   - exit code 0 indicates that all foreground packages are found
+     installable;
+   - exit code 1 indicates that at least one foreground package is found
+     uninstallable.
 *)
 let if_application ?(alternatives = []) filename main =
   let normalize f =

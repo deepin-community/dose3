@@ -25,7 +25,7 @@ let join (loc, v) l =
     |(_,v)::tl -> aux (startloc,v::acc) tl
   in
   let r,vl = aux (loc, [v]) l in
-  (r,String.concat "" vl)
+  (r,String.concat "\n " vl)
 
 %}
 

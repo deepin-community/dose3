@@ -12,7 +12,7 @@
 (*****************************************************************************)
 
 {
-  open Dose_common
+  open Dose_extra
   open Packages_parser
 
 }

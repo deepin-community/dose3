@@ -47,9 +47,8 @@ module Options = struct
 
   let chunksize = StdOpt.int_option ()
 
-  open OptParser
+  open OptParser;;
 
-  ;;
   add
     options
     ~long_name:"ncores"
@@ -407,8 +406,8 @@ let main () =
       Format.printf "---@.")
     pred ;
   0
-
 ;;
+
 StdUtils.if_application
   ~alternatives:
     ["dose-challenged"; "dose3-challenged"; "edos-challenged"; "deb-challenged"]

@@ -135,7 +135,7 @@ let compare_pre = function
 
 (* 1. Not having a prerelease is > that having one
    2. We compare each pre-release, the one with with less elements win or the
-      one with a hight element.  *)
+      one with a hight element. *)
 let compare_pre (l1, l2) =
   let lenl1 = List.length l1 in
   let lenl2 = List.length l2 in

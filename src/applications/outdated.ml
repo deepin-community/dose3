@@ -33,26 +33,22 @@ module Options = struct
     let options = options
   end)
 
-  include StdOptions.DistcheckOptions
+  include StdOptions.DistcheckOptions;;
 
-  ;;
   StdOptions.DistcheckOptions.add_options options
 
-  include StdOptions.InputOptions
+  include StdOptions.InputOptions;;
 
-  ;;
   StdOptions.InputOptions.add_options ~default:["checkonly"] options
 
-  include StdOptions.DistribOptions
+  include StdOptions.DistribOptions;;
 
-  ;;
   StdOptions.DistribOptions.add_debian_options options
 
   let dump = StdOpt.store_true ()
 
-  open OptParser
+  open OptParser;;
 
-  ;;
   add options ~long_name:"dump" ~help:"Dump the cudf package list and exit" dump
 end
 
@@ -322,8 +318,8 @@ let main () =
   else 1
 
 (* at least one broken package *)
-
 ;;
+
 StdUtils.if_application
   ~alternatives:
     ["dose-outdated"; "dose3-outdated"; "edos-outdated"; "deb-outdated"]

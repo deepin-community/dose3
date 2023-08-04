@@ -43,14 +43,12 @@ module Options = struct
 
   let dropalternatives = StdOpt.store_true ()
 
-  include StdOptions.DistcheckOptions
+  include StdOptions.DistcheckOptions;;
 
-  ;;
   StdOptions.DistcheckOptions.add_options options
 
-  include StdOptions.InputOptions
+  include StdOptions.InputOptions;;
 
-  ;;
   let default =
     List.fold_left
       (fun acc e -> List.remove acc e)
@@ -59,24 +57,20 @@ module Options = struct
   in
   StdOptions.InputOptions.add_options ~default options
 
-  include StdOptions.OutputOptions
+  include StdOptions.OutputOptions;;
 
-  ;;
-  StdOptions.OutputOptions.add_options options
+  StdOptions.OutputOptions.add_options options;;
 
-  ;;
   StdOptions.OutputOptions.add_option
     options
     ~long_name:"dump"
     ~help:"dump the cudf file"
     dump
 
-  include StdOptions.DistribOptions
+  include StdOptions.DistribOptions;;
 
-  ;;
-  StdOptions.DistribOptions.add_debian_options options
+  StdOptions.DistribOptions.add_debian_options options;;
 
-  ;;
   let group = StdOptions.DistribOptions.deb_group options in
   StdOptions.DistribOptions.add_option
     options
@@ -291,8 +285,8 @@ let main () =
     Printf.fprintf oc "\n" ;
     Cudf_printer.pp_universe oc universe) ;
   nbp
-
 ;;
+
 StdUtils.if_application
   ~alternatives:
     [ "deb-buildcheck";

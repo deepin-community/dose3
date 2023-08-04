@@ -14,6 +14,7 @@
 
 open ExtLib
 open Dose_common
+open Dose_extra
 
 include Util.Logging (struct
   let label = "doseparse.stdOptions"
@@ -123,9 +124,8 @@ module MakeOptions (O : Ot) = struct
 
   let options = O.options ~status:64 ~version ()
 
-  open OptParser
+  open OptParser;;
 
-  ;;
   add
     options
     ~short_name:'v'
