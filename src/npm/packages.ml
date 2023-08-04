@@ -17,6 +17,7 @@
 
 open ExtLib
 open Dose_common
+open Dose_extra
 module Pcre = Re_pcre
 
 include Util.Logging (struct

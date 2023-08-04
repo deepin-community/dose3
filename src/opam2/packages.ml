@@ -17,6 +17,7 @@
 
 open ExtLib
 open Dose_common
+open Dose_extra
 
 include Util.Logging (struct
   let label = "dose_opam.packages"
@@ -183,8 +184,8 @@ class package ?(name = ("package", None)) ?(version = ("version", None))
   end
 
 (* a stanza is not considered if the intersection between the
-active switch and the not available switches for a package is
-empty *)
+   active switch and the not available switches for a package is
+   empty *)
 let parse_package_stanza ((switch, switches, _profiles) as options)
     ?(extras = []) par =
   try

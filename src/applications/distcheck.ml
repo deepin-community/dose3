@@ -17,6 +17,7 @@
 
 open! ExtLib
 open Dose_common
+open Dose_extra
 open Dose_algo
 open Dose_doseparse
 
@@ -37,46 +38,41 @@ module Options = struct
 
   let fields = StdOptions.str_list_option ()
 
-  include StdOptions.DistcheckOptions
+  include StdOptions.DistcheckOptions;;
 
-  ;;
-  StdOptions.DistcheckOptions.add_options options
+  StdOptions.DistcheckOptions.add_options options;;
 
-  ;;
   StdOptions.DistcheckOptions.add_option
     options
     ~long_name:"coinst"
     ~help:"Check if these packages are coinstallable"
     coinst
-
   ;;
+
   StdOptions.DistcheckOptions.add_option
     options
     ~long_name:"fields"
     ~help:"Print additional fields if available"
     fields
-
   ;;
+
   StdOptions.DistcheckOptions.add_option
     options
     ~long_name:"lowmem"
     ~help:"Serialise multiple distcheck runs to save memory"
     lowmem
 
-  include StdOptions.InputOptions
+  include StdOptions.InputOptions;;
 
-  ;;
   let default = "dot" :: StdOptions.InputOptions.default_options in
   StdOptions.InputOptions.add_options ~default options
 
-  include StdOptions.OutputOptions
+  include StdOptions.OutputOptions;;
 
-  ;;
   StdOptions.OutputOptions.add_options options
 
-  include StdOptions.DistribOptions
+  include StdOptions.DistribOptions;;
 
-  ;;
   let default =
     List.fold_left
       List.remove
@@ -294,8 +290,8 @@ let main () =
         (Diagnostic.pp_summary ~explain:explain_summary ~pp ())
         results ;
     nbp
-
 ;;
+
 StdUtils.if_application
   ~alternatives:
     [ "debcheck";

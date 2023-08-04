@@ -548,6 +548,53 @@ let test_depclean =
   *)
   assert_equal (List.sort res) (List.sort expected)
 
+let test_explain =
+  "explain" >:: fun _ ->
+  let a =
+    { Cudf.default_package with
+      Cudf.package = "a";
+      version = 1;
+      depends = [[("b", None)]; [("c", None)]]
+    }
+  in
+  let b =
+    { Cudf.default_package with
+      Cudf.package = "b";
+      version = 1;
+      conflicts = [("c", None)]
+    }
+  in
+  let c = { Cudf.default_package with Cudf.package = "c"; version = 1 } in
+  let univ = Cudf.load_universe [a; b; c] in
+  match
+    Depsolver.check_request
+      ~explain:true
+      ( Cudf.default_preamble,
+        univ,
+        { Cudf.default_request with Cudf.install = [("a", None)] } )
+  with
+  | Depsolver.Unsat (Some { Diagnostic.result = Diagnostic.Failure f; _ }) -> (
+      match f () with
+      | [ Diagnostic.Dependency (p1, l1, pl1);
+          Diagnostic.Dependency (p2, l2, pl2);
+          Diagnostic.Conflict (p4, p5, v1);
+          Diagnostic.Dependency (p3, l3, pl3) ]
+        when p1
+             = { Depsolver.dummy_request with Cudf.depends = [[("a", None)]] }
+             && l1 = [("a", None)]
+             && pl1 = [a]
+             && p2 = a
+             && l2 = [("b", None)]
+             && pl2 = [b]
+             && p4 = b && p5 = c
+             && v1 = ("c", None)
+             && p3 = a
+             && l3 = [("c", None)]
+             && pl3 = [c] ->
+          assert_bool "pass" true
+      | _ -> assert_failure "fail")
+  | _ -> assert_failure "fail"
+
 let test_depsolver =
   "depsolver"
   >::: [ test_install;
@@ -569,7 +616,8 @@ let test_depsolver =
          test_depclean;
          test_is_consistent;
          test_keep_package;
-         test_keep_version ]
+         test_keep_version;
+         test_explain ]
 
 module PKGTUPLE = struct
   type t = Cudf.package * Cudf.package
@@ -916,7 +964,6 @@ let all =
          test_dominators
          (* test_clause_dump ; *) ]
 
-let main () = OUnit.run_test_tt_main all
+let main () = OUnit.run_test_tt_main all;;
 
-;;
 main ()

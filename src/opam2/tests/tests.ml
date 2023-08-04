@@ -23,13 +23,13 @@ let parse_depends =
   in
   let returns options = returns_result (function_to_test options) in
   [ ( "depends simple",
-      [("depends", (Dose_common.Format822.dummy_loc, "a"))],
+      [("depends", (Dose_extra.Format822.dummy_loc, "a"))],
       returns ("system", [], []) [[(("a", None), None)]] );
     ( "depends filter arch",
-      [("depends", (Dose_common.Format822.dummy_loc, "a [arch]"))],
+      [("depends", (Dose_extra.Format822.dummy_loc, "a [arch]"))],
       returns ("arch", [], []) [[(("a", None), None)]] );
     ( "depends filter arch neg",
-      [("depends", (Dose_common.Format822.dummy_loc, "a [arch]"))],
+      [("depends", (Dose_extra.Format822.dummy_loc, "a [arch]"))],
       returns ("system", [], []) [] ) ]
 
 let version_lag =
@@ -216,7 +216,6 @@ let all =
          "test installed" >::: make_test_cases opamcudf_installed;
          "test pinned" >::: make_test_cases opamcudf_pinned ]
 
-let main () = OUnit.run_test_tt_main all
+let main () = OUnit.run_test_tt_main all;;
 
-;;
 main ()

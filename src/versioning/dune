@@ -6,6 +6,7 @@
 
 (rule
  (alias runtest)
+ (package dose3)
  (action
   (chdir
    ../../

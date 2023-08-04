@@ -1,51 +1,28 @@
-
-##########
-smallworld
-##########
-
-
-****
-NAME
-****
-
+=head1 NAME
 
 smallworld - compute detailed statistic about the dependency graph
 
+=head1 SYNOPSIS
 
-********
-SYNOPSIS
-********
+B<smallworld> [option] ... I<file> ... 
 
+=cut
 
-\ **smallworld**\  [option] ... \ *file*\  ...
+=head1 DESCRIPTION
 
+B<smallworld> computes detailed statistic about the dependency graph. It
+accepts 
 
-***********
-DESCRIPTION
-***********
-
-
-\ **smallworld**\  computes detailed statistic about the dependency graph. It
-accepts
-
-
-*******************
-Input Specification
-*******************
-
+=head1 Input Specification
 
 Currently supported input types are cudf, debian, rpm, opencsw and eclipse. The
-\ **distcheck**\  tool expects its input specifiations in the form
-\ *type://pathname*\  where \ *type*\  is one of \ **cudf**\ , \ **deb**\ , \ **synthesis**\ ,
-\ **hdlist**\ , \ **csw**\  or \ **eclipse**\ , and \ *pathname*\  is the pathname of a file
+B<distcheck> tool expects its input specifiations in the form
+I<type://pathname> where I<type> is one of B<cudf>, B<deb>, B<synthesis>,
+B<hdlist>, B<csw> or B<eclipse>, and I<pathname> is the pathname of a file
 containing the input. The package metadata found in that file must
-correspond to the \ *type*\  given in the URI.
+correspond to the I<type> given in the URI.
 
-
-********************
-Output Specification
-********************
-
+=head1 Output Specification
 
 The output of smallworld is in YAML formar and it is structured as follows :
 
@@ -63,7 +40,7 @@ The number of vertex that have zero degree.
 
 Density : 
 The density of a graph G = (V,E) measures how many edges are in set E compared 
-to the maximum possible number of edges between vertices in set V.
+to the maximum possible number of edges between vertices in set V. 
 
 Weakly Connected Components :
 The weakly connected components are computed by considering the undirected
@@ -72,7 +49,7 @@ components in the graph.
 
 Strongly Connected Components :
 A a strongly connected component of a directed graph is a subgraph where all
-nodes in the subgraph are reachable by all other nodes in the subgraph.
+nodes in the subgraph are reachable by all other nodes in the subgraph. 
 
 SmallWorld Properties
 
@@ -119,63 +96,46 @@ Centrality :
 Centrality Out Degree : 0.00471
 Centrality In Degree : 0.46787
 
+=head1 OPTIONS
 
-*******
-OPTIONS
-*******
+=over 8
 
+=item B<-g --generic>
+=item B<-p --scatterplots>
+=item B<--combine-scatter>
+=item B<-c --connectivity>
+=item B<-m --components>
+=item B<-s --smallworld>
+=item B<-e --centrality>
+=item B<--strong-deps>
+=item B<--detrans>
+=item B<--transitive-closure>
 
-
-- \ **-g --generic**\  =item \ **-p --scatterplots**\ 
-=item \ **--combine-scatter**\ 
-=item \ **-c --connectivity**\ 
-=item \ **-m --components**\ 
-=item \ **-s --smallworld**\ 
-=item \ **-e --centrality**\ 
-=item \ **--strong-deps**\ 
-=item \ **--detrans**\ 
-=item \ **--transitive-closure**\ 
-
-
-
-- \ **-v**\ 
+=item B<-v>
  
- Enable info / warnings / debug messages. This option may be repeated up to
- three times in order to increase verbosity.
- 
+Enable info / warnings / debug messages. This option may be repeated up to
+three times in order to increase verbosity.
 
+=item B<-h>, B<--help> 
 
-- \ **-h**\ , \ **--help**\ 
- 
- Display this list of options.
- 
+Display this list of options. 
 
+=back
+=cut
 
+=head1 EXAMPLE
 
-*******
-EXAMPLE
-*******
+ smallworld deb:///var/lib/apt/lists/ftp.fr.debian.org_debian_dists_sid_main_binary-amd64_Packages
 
+=cut
 
-
-.. code-block:: perl
-
-  smallworld deb:///var/lib/apt/lists/ftp.fr.debian.org_debian_dists_sid_main_binary-amd64_Packages
-
-
-
-*******
-AUTHORS
-*******
-
+=head1 AUTHORS
 
 Pietro Abate and Jaap Boender
 
+=cut
 
-********
-SEE ALSO
-********
+=head1 SEE ALSO
 
-
-<http://www.mancoosi.org> is the home page of the Mancoosi project.
-
+<http://www.mancoosi.org> is the home page of the Mancoosi project. 
+ 

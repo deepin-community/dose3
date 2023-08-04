@@ -3,6 +3,7 @@
 
 open ExtLib
 open Dose_common
+open Dose_extra
 
 (* hash cons table *)
 let h = Util.StringHashtbl.create 10000

@@ -189,7 +189,6 @@ let suite =
          >::: make_test_cases_compare test_parse_and_compare_eq;
          "test_decompose" >::: make_test_cases_decompose test_decompose ]
 
-let main () = OUnit.run_test_tt_main suite
+let main () = OUnit.run_test_tt_main suite;;
 
-;;
 main ()

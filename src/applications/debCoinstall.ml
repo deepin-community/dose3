@@ -43,17 +43,15 @@ module Options = struct
 
   let cputable = StdOpt.str_option ()
 
-  include StdOptions.DistcheckOptions
+  include StdOptions.DistcheckOptions;;
 
-  ;;
   let default =
     List.remove StdOptions.DistcheckOptions.default_options "successes"
   in
   StdOptions.DistcheckOptions.add_options ~default options
 
-  include StdOptions.InputOptions
+  include StdOptions.InputOptions;;
 
-  ;;
   let default =
     List.fold_left
       (fun acc e -> List.remove acc e)
@@ -67,9 +65,8 @@ module Options = struct
     ~help:"Associate Sources file"
     sources
 
-  include StdOptions.OutputOptions
+  include StdOptions.OutputOptions;;
 
-  ;;
   StdOptions.OutputOptions.add_options options ;
   StdOptions.OutputOptions.add_option
     options
@@ -77,9 +74,8 @@ module Options = struct
     ~help:"dump the cudf file"
     dump
 
-  include StdOptions.DistribOptions
+  include StdOptions.DistribOptions;;
 
-  ;;
   let default =
     List.fold_left
       (fun acc e -> List.remove acc e)
@@ -301,8 +297,8 @@ let main () =
       1 (* at least one package is not installable *))
   in
   exitcode
-
 ;;
+
 StdUtils.if_application
   ~alternatives:["dose-deb-coinstall"; "deb-coinstall"]
   "debCoinstall"

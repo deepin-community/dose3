@@ -11,6 +11,7 @@
 (**************************************************************************************)
 
 open ExtLib
+open Dose_common
 
 include Util.Logging (struct
   let label = "dose_common.format822"

@@ -150,8 +150,7 @@ let get_cudf_version tables (package, version) =
 (* cudf -> pef *)
 let get_real_version tables (p, i) =
   let n = try fst (ExtString.String.split p "%3a") with Invalid_string -> p in
-  if i = Util.max32int || i = Util.max32int - 1 then
-    (CudfAdd.decode n, None, "nan")
+  if CudfAdd.is_nan_version i then (CudfAdd.decode n, None, "nan")
   else
     try (CudfAdd.decode n, None, Hashtbl.find tables.reverse_table (n, i))
     with Not_found ->

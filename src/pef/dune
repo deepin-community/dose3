@@ -1,7 +1,7 @@
 (library
  (name dose_pef)
- (public_name dose3.pef)
- (libraries extlib cudf dose3.common dose3.versioning)
+ (public_name dose3-extra.pef)
+ (libraries extlib cudf dose3-extra dose3.common dose3.versioning)
  (flags (:standard)))
 
 (ocamllex packages_lexer)
@@ -10,6 +10,8 @@
 
 (rule
  (alias runtest)
+ (package dose3-extra)
+ (deps ../../tests/pef/unittests.pef)
  (action
   (chdir
    ../../

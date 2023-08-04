@@ -1,4 +1,4 @@
-open Dose_common
+open Dose_extra
 open OUnit
 open Dose_npm
 
@@ -162,7 +162,6 @@ let suite =
          "test simplelist" >::: make_test_cases_parse test_parse_simplelist;
          "test orlist" >::: make_test_cases_parse test_parse_orlist ]
 
-let main () = OUnit.run_test_tt_main suite
+let main () = OUnit.run_test_tt_main suite;;
 
-;;
 main ()

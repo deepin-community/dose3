@@ -1,4 +1,4 @@
-open Dose_common
+open Dose_extra
 
 type request =
   { install : Dose_pef.Packages_types.vpkg list;

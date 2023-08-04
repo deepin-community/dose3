@@ -13,7 +13,7 @@
 (**************************************************************************)
 
 open ExtLib
-open Dose_common
+open Dose_extra
 
 let vpkg_option ?default ?(metavar = " <vpkg>") () =
   let parse_vpkg s =

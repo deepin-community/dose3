@@ -15,6 +15,7 @@
 module Pcre = Re_pcre
 open ExtLib
 open Dose_common
+open Dose_extra
 
 include Util.Logging (struct
   let label = "dose_deb.edsp"
@@ -271,7 +272,7 @@ let tocudf tables ?(options = Debcudf.default_options) pkg =
    Hence, when a remove request is issued without version constraint,
    we return (candidate.Cudf.package,None) that designates the only
    package installed.
- *)
+*)
 let requesttocudf tables universe request =
   let to_cudf (p, v) = (p, Debcudf.get_cudf_version tables (p, v)) in
   let get_candidate (name, constr) =

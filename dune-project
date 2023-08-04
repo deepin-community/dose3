@@ -1,13 +1,11 @@
-(lang dune 2.3)
-; we choose 2.3 because it's the latest version that doesn't trigger
-; https://github.com/ocaml/dune/issues/4126
+(lang dune 2.7)
 (name dose3)
-(version 6.0)
+(version 7.0.0)
 (generate_opam_files true)
-(license "LGPL-3+ with OCaml linking exception")
+(license "LGPL-3.0-or-later with OCaml-LGPL-linking-exception")
 (authors "Pietro Abate" "Ralf Treinen" "Jaap Boender" "Johannes Schauer Marin Rodrigues" "Roberto Di Cosmo" "Felipe Garay" "Stefano Zacchiroli" "Jakub Zwolakowski" "Olivier Rosello")
 (maintainers "Pietro Abate" "Johannes Schauer Marin Rodrigues" "Ralf Treinen")
-(source (uri https://gitlab.com/irill/dose3))
+(source (uri git+https://gitlab.com/irill/dose3.git))
 (bug_reports https://gitlab.com/irill/dose3/issues/)
 (homepage http://www.mancoosi.org/software/)
 (documentation "https://irill.gitlab.io/dose3")
@@ -36,16 +34,29 @@
   - dose-deb-coinstall, a Debian-specific tool for checking whether a set of
     packages can be installed all together.")
  (depends
-  (dune (>= 2.7.1))
+  (ocaml (>= 4.03))
   (extlib (>= 1.7.8))
   (base64 (>= 3.1.0))
-  (camlbz2 (>= 0.7.0))
-  (camlzip (>= 1.08))
   (cudf (>= 0.7))
   (ocamlgraph (>= 2.0.0))
   (re (>= 1.2.2))
-  parmap
+  stdlib-shims
   (ounit :with-test)
+  (conf-python-3 :with-test)
+  (conf-python3-yaml :with-test)
+  (conf-dpkg :with-test)
   (odoc :with-doc)
+ )
+)
+
+(package
+ (name dose3-extra)
+ (synopsis "Some extra functions for dose3")
+ (depends
+  (ocaml (>= 4.03))
+  (extlib (>= 1.7.8))
+  (camlbz2 (>= 0.7.0))
+  (camlzip (>= 1.08))
+  parmap
  )
 )

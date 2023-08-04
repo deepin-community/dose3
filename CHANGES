@@ -1,3 +1,22 @@
+dose3 (7.0.0) UNRELEASED; urgency=low
+  * Move all applications, dose3.debian, dose3.doseparse, dose3.npm, dose3.opam2, dose3.opencsw, dose3.pef, as well as the Criteria, Criteria_lexer, Criteria_parser, Criteria_types, Format822, Format822_lexer, Format822_parser and Input modules from dose3.common to a new dose3-extra package
+
+ -- Kate <kit.ty.kate@disroot.org>  Wed 21 Jul 2021 17:50:00 BST
+
+dose3 (6.1) UNRELEASED; urgency=low
+  * reintroduce pod2man for manpages instead of pandoc
+  * bump dune version to 2.7
+
+ -- Pietro Abate <pietro.abate@nomadic-labs.com>  Tue 09 Feb 2021 09:28:43 AM CET
+
+dose3 (6.0.2) UNRELEASED; urgency=low
+  * make compile with OCaml >= 4.03
+  * Remove grep-dctrl and add new debGrep tool
+  * ensure the same result on 32 and 64 bits archs
+  * publish docs on https://irill.gitlab.io/dose3
+
+ -- Pietro Abate <pietro.abate@nomadic-labs.com>  Tue 02 Feb 2021 09:57:57 AM CET
+
 dose3 (6.0.1) UNRELEASED; urgency=low
   * fix CHANGES entry for 6.0
   * ocamlgraph >=2.0

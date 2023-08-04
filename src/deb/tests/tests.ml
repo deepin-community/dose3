@@ -19,6 +19,7 @@
 
 open OUnit
 open Dose_common
+open Dose_extra
 open Dose_debian
 module Version = Dose_versioning.Debian
 
@@ -60,12 +61,12 @@ let make_test_cases triplets =
     triplets
 
 (* XXX TODO:
-  * add test for default arch
-  * add test for extras
-  * add test for parsing errors
-  * add test for Ingore Packages
-  * add test for status and merge
-  * *)
+   * add test for default arch
+   * add test for extras
+   * add test for parsing errors
+   * add test for Ingore Packages
+   * add test for status and merge
+   * *)
 
 let extras_properties =
   [ ("Maintainer", ("maintainer", `String None));
@@ -1620,7 +1621,6 @@ let all =
          test_sources;
          test_essential_constraints ]
 
-let main () = OUnit.run_test_tt_main all
+let main () = OUnit.run_test_tt_main all;;
 
-;;
 main ()

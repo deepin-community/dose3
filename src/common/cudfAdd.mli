@@ -164,6 +164,12 @@ val get_package_list : ('a, 'b list ref) ExtLib.Hashtbl.t -> 'a -> 'b list
 (** normalize_set l returns the list l without any duplicate element. *)
 val normalize_set : int list -> int list
 
+(** Check if a CUDF version is nan *)
+val is_nan_version : int -> bool
+
+(** Version constant for impossible constraint *)
+val nan_version : int
+
 (** {2 Formatting, printing, converting to string. } *)
 
 val string_of : (Format.formatter -> 'a -> 'b) -> 'a -> string

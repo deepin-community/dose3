@@ -12,6 +12,7 @@
 
 open ExtLib
 open Criteria_types
+open Dose_common
 module Pcre = Re_pcre
 
 include Util.Logging (struct
@@ -24,30 +25,30 @@ let lexbuf_wrapper type_parser v =
 let parse_criteria v = lexbuf_wrapper Criteria_parser.criteria_top v
 
 (* Cudf field names are much more restrictive than deb822 field names which
-  is why the deb822 field name has to be sanitized.
-  The first eight hex chars of the md5sum of the fieldname, the match type
-  and the search string are appended because:
-  - sanitizing deb822 field names might make them not unique anymore
-  - regexp may contain mostly special characters that would otherwise all
-    be deleted, creating a non-unique field name
-  - regexp might be very long but cutting of the regex might make the
-    result non-unique
-  - a hash solves all these problems because it contains only valid
-    characters while being unique for any input (minus unlikely collisions)
- 
-  Cudf properties are identifiers as per cudf spec and must start with
-  a lowercase latin letter, followed by lowercase latin letters, dashes
-  or arabic numerals and must be of length one or greater.
-  We restrict ourselves to US ASCII characters because checking for
-  latin characters would be hard. We also ignore the length restriction
-  and the special restriction for the beginning of a property because
-  our new field below automatically has a sufficient length and starts
-  with a lowercase latin character because of the "x-" prefix *)
+   is why the deb822 field name has to be sanitized.
+   The first eight hex chars of the md5sum of the fieldname, the match type
+   and the search string are appended because:
+   - sanitizing deb822 field names might make them not unique anymore
+   - regexp may contain mostly special characters that would otherwise all
+     be deleted, creating a non-unique field name
+   - regexp might be very long but cutting of the regex might make the
+     result non-unique
+   - a hash solves all these problems because it contains only valid
+     characters while being unique for any input (minus unlikely collisions)
+
+   Cudf properties are identifiers as per cudf spec and must start with
+   a lowercase latin letter, followed by lowercase latin letters, dashes
+   or arabic numerals and must be of length one or greater.
+   We restrict ourselves to US ASCII characters because checking for
+   latin characters would be hard. We also ignore the length restriction
+   and the special restriction for the beginning of a property because
+   our new field below automatically has a sufficient length and starts
+   with a lowercase latin character because of the "x-" prefix *)
 let invalidchars = Pcre.regexp "[^0-9a-z-]"
 
 (* replace all possibly illegal letters by a dash
-  Get the first eight hex digits of the md5sum of the fieldname, the match
-  type and the search string.
+   Get the first eight hex digits of the md5sum of the fieldname, the match
+   type and the search string.
 *)
 let makefield ?(sep = "=") fieldname regex =
   let regexhash =

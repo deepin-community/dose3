@@ -18,6 +18,7 @@
 (** Representation of a debian release files *)
 
 open Dose_common
+open Dose_extra
 
 include Util.Logging (struct
   let label = "dose_deb.release"

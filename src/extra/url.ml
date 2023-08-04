@@ -10,6 +10,8 @@
 (*  library, see the COPYING file for more information.                     *)
 (****************************************************************************)
 
+open Dose_common
+
 exception Invalid_url of string
 
 include Util.Logging (struct

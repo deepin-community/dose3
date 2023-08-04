@@ -1,17 +1,18 @@
-PODA = $(wildcard *.rst)
+# all pod files
+PODA = $(wildcard *.pod)
 # pod files per section
-POD5 = apt-cudf.conf.rst
-POD8 = apt-cudf-get.rst
+POD5 = apt-cudf.conf.pod
+POD8 = apt-cudf-get.pod
 POD1 = $(filter-out $(POD5) $(POD8),$(PODA))
 
 # manpages to be generated
-MAN1 = $(patsubst %.rst,%.1,$(POD1))
-MAN5 = $(patsubst %.rst,%.5,$(POD5))
-MAN8 = $(patsubst %.rst,%.8,$(POD8))
+MAN1 = $(patsubst %.pod,%.1,$(POD1))
+MAN5 = $(patsubst %.pod,%.5,$(POD5))
+MAN8 = $(patsubst %.pod,%.8,$(POD8))
 MANA = $(MAN1) $(MAN5) $(MAN8)
 
 # manpages in HTML to be generated
-HTMLA = $(patsubst %.rst,%.html,$(PODA))
+HTMLA = $(patsubst %.pod,%.html,$(PODA))
 
 all: man html
 
@@ -19,20 +20,26 @@ man: $(MANA)
 
 html: $(HTMLA)
 
-%.1: %.rst
-	pandoc -s -t man $*.rst -o $@
+# we use pod2man and pod2html instead of pandoc because we want to be able to
+# build this even on exotic platforms where pandoc is not available due to its
+# very large number of build dependencies
+%.1: %.pod
+	pod2man --section 1 --center="DOSE Tools" \
+		--release "$(NAME) $(VERSION)" $*.pod > $@
 
-%.5: %.rst
-	pandoc -s -t man $*.rst -o $@
+%.5: %.pod
+	pod2man --section 5 --center="DOSE Tools" \
+		--release "$(NAME) $(VERSION)" $*.pod > $@
 
-%.8: %.rst
-	pandoc -s -t man $*.rst -o $@
+%.8: %.pod
+	pod2man --section 8 --center="DOSE Tools" \
+		--release "$(NAME) $(VERSION)" $*.pod > $@
 
-%.html: %.rst
-	pandoc -s -t html $*.rst -o $@
+%.html: %.pod
+	pod2html $*.pod > $@
 
 distclean clean:
-	rm -f $(MANA) $(HTMLA)
+	rm -f $(MANA) $(HTMLA) pod2htmd.tmp pod2htmi.tmp
 
 .PHONY: clean distclean man html all
 

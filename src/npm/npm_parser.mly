@@ -224,7 +224,7 @@ range:
 
 %%
 
-open Dose_common
+open Dose_extra
 
 let dependlist_top = Format822.error_wrapper "dependlist" dependlist_top
 let depends_top = Format822.error_wrapper "depends" depends_top
