@@ -9,10 +9,10 @@ Build-Depends: debhelper-compat (= 13),
                dh-ocaml,
                libbase64-ocaml-dev (>= 3.1.0),
                libbz2-ocaml-dev (>= 0.6.0-10~),
-               libcudf-ocaml-dev (>= 0.7),
+               libcudf-ocaml-dev,
                libextlib-ocaml-dev (>= 1.7.7),
-               libocamlgraph-ocaml-dev (>= 2.0.0),
-               libre-ocaml-dev (>= 1.7.2~),
+               libocamlgraph-ocaml-dev (>= 2.1.0),
+               libre-ocaml-dev,
                libzip-ocaml-dev (>= 1.08),
                ocaml-dune (>= 2.7.1),
                ocaml,
@@ -29,8 +29,8 @@ Build-Depends-Indep: graphviz <!nodoc>,
                      ocaml-odoc <!nodoc>,
                      texlive-latex-base <!nodoc>,
                      texlive-latex-extra <!nodoc>
-Standards-Version: 4.6.0
-Homepage: http://www.mancoosi.org/software/
+Standards-Version: 4.6.2
+Homepage: https://www.mancoosi.org/software/
 Vcs-Browser: https://salsa.debian.org/ocaml-team/dose3
 Vcs-Git: https://salsa.debian.org/ocaml-team/dose3.git
 Rules-Requires-Root: no
@@ -134,12 +134,6 @@ Package: dose-doc
 Section: doc
 Architecture: all
 Depends: ${misc:Depends}
-Replaces: apt-cudf (<< 4.3-2),
-          dose-distcheck (<< 4.3-2),
-          libdose3-ocaml-dev (<< 4.3-2)
-Breaks: apt-cudf (<< 4.3-2),
-        dose-distcheck (<< 4.3-2),
-        libdose3-ocaml-dev (<< 4.3-2)
 Multi-Arch: foreign
 Build-Profiles: <!nodoc>
 Description: Documentation for dose tools and libraries.
